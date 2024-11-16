@@ -1,4 +1,0 @@
-spring:
-  data:
-    mongodb:
-      uri: mongodb://admin_user:secure_password@mongo:27017/pigeonDB

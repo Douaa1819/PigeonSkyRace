@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: pigeonSkyRace
+
+  data:
+    mongodb:
+      authentication-database: admin
+      username: admin
+      password: admin
+      database: pigeonSkyRace
+      uri: mongodb://admin:admin@mongodb:27017/pigeonSkyRace
+
+logging:
+  level:
+    org:
+      springframework: DEBUG
