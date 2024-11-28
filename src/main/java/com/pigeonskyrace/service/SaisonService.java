@@ -2,6 +2,7 @@ package com.pigeonskyrace.service;
 
 import com.pigeonskyrace.dto.reponse.SaisonReponseDTO;
 import com.pigeonskyrace.dto.request.SaisonRequestDTO;
+import com.pigeonskyrace.exception.EntityNotFoundException;
 import com.pigeonskyrace.mapper.SaisonMapper;
 import com.pigeonskyrace.model.Saison;
 import com.pigeonskyrace.repository.SaisonRepository;
@@ -41,7 +42,7 @@ public class SaisonService {
         return saisonRepository.findAll();
     }
 
-    public Optional<Saison> findById(String id) {
-        return saisonRepository.findById(id);
+    public Saison findById(ObjectId id) {
+        return saisonRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("saison not found"));
     }
 }

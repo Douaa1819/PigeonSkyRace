@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
@@ -16,8 +17,10 @@ public class PigeonSaisonCompetition {
     @MongoId
     private ObjectId id;
 
-    private ObjectId saisonPigeonId;
+    @DBRef
+    private SaisonPigeon saisonPigeon;
 
-    private ObjectId competitionId;
+    @DBRef
+    private Competion competition;
 
 }

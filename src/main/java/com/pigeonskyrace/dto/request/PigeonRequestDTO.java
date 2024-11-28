@@ -4,14 +4,17 @@ import com.pigeonskyrace.model.enums.Sexe;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.time.LocalDate;
-
+@Setter
+@Getter
 public class PigeonRequestDTO {
+
 
     private String numeroBague;
 
-    @NotBlank(message = "Le sexe est requis")
+    @NotNull(message = "Le sexe est requis")
     private Sexe sexe;
 
     @NotNull(message = "L'âge est requis")
@@ -25,11 +28,11 @@ public class PigeonRequestDTO {
     @NotNull(message = "L'ID du colombier est requis")
     private String colombierId;
 
-    public @NotBlank(message = "Le sexe est requis") Sexe getSexe() {
+    public @NotNull(message = "Le sexe est requis") Sexe getSexe() {
         return sexe;
     }
 
-    public void setSexe(@NotBlank(message = "Le sexe est requis") Sexe sexe) {
+    public void setSexe(@NotNull(message = "Le sexe est requis") Sexe sexe) {
         this.sexe = sexe;
     }
 
@@ -57,11 +60,4 @@ public class PigeonRequestDTO {
         this.colombierId = colombierId;
     }
 
-    public String getNumeroBague() {
-        return numeroBague;
-    }
-
-    public void setNumeroBague(String numeroBague) {
-        this.numeroBague = numeroBague;
-    }
 }

@@ -7,7 +7,9 @@ import com.pigeonskyrace.model.Colombier;
 import com.pigeonskyrace.model.Pigeon;
 import com.pigeonskyrace.service.ColombierService;
 import com.pigeonskyrace.service.PigeonService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,25 +19,18 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/pigeons")
 @RequiredArgsConstructor
+
 public class PigeonController {
     private final PigeonService pigeonService;
-    private final ColombierService colombierService;
     private final PigeonMapper pigeonMapper;
 
 
-    @PostMapping
-    public ResponseEntity<PigeonResponseDTO> createPigeon(@RequestBody PigeonRequestDTO pigeonRequestDTO) {
-
-      //  Colombier colombier = colombierService.findByNomColombier(pigeonRequestDTO.getColombier())
-                //.orElseThrow(() -> new RuntimeException("Colombier non trouvé : " + pigeonRequestDTO.getColombier()));
-
-        Pigeon pigeon = pigeonMapper.toPigeon(pigeonRequestDTO);
-       // pigeon.setColombier(colombier);
-
-        Pigeon savedPigeon = pigeonService.save(pigeon);
-
-        return ResponseEntity.ok(pigeonMapper.toPigeonResponseDTO(savedPigeon));
+    @PostMapping("")
+    public ResponseEntity<PigeonResponseDTO> createPigeon(@RequestBody @Valid PigeonRequestDTO pigeonRequestDTO) {
+        PigeonResponseDTO responseDTO = pigeonService.createPigeon(pigeonRequestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
+
 
 
     @GetMapping

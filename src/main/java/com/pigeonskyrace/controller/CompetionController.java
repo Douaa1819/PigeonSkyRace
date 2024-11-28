@@ -11,6 +11,7 @@ import com.pigeonskyrace.service.SaisonService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/v1/competion")
+@RequestMapping("/api/v1/competions")
 @RequiredArgsConstructor
 public class CompetionController {
 
@@ -29,14 +30,13 @@ public class CompetionController {
     private final CompetionService competionService;
     private  final SaisonService  saisonService;
 
-    @PostMapping()
-    public ResponseEntity<CompetionReponseDTO> createCompetion(@RequestBody CompetionRequestDTO competionRequestDTO) {
+    @PostMapping("")
+    public ResponseEntity<CompetionReponseDTO> createCompetion(@RequestBody @Valid CompetionRequestDTO competionRequestDTO) {
         // Convertir CompetionRequestDTO en entité Competion
         Competion competion = competionMapper.toEntity(competionRequestDTO);
 
         // Rechercher la saison par son ID
-        Saison saison = saisonService.findById(competionRequestDTO.getSaisonId())
-                .orElseThrow(() -> new RuntimeException("Saison non trouvée avec l'ID : " + competionRequestDTO.getSaisonId()));
+        Saison saison = saisonService.findById(new ObjectId(competionRequestDTO.getSaisonId()));
 
         // Associer la compétition à la saison
         competion.setSaison(saison);
@@ -58,7 +58,7 @@ public class CompetionController {
     }
 
 
-    @GetMapping("/competions")
+    @GetMapping("")
     public ResponseEntity<List<CompetionReponseDTO>> getAllCompetions() {
         List<Competion> competions = competionService.findAll();
         List<CompetionReponseDTO> competionsDTO = competions.stream()

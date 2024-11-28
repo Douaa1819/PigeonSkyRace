@@ -5,5 +5,5 @@ import org.bson.types.ObjectId;
 
 @Data
 public class SaisonPigeonRequestDTO {
-    private ObjectId pigeonId;
+    private String pigeonId;
 }

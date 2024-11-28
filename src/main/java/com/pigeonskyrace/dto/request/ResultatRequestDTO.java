@@ -1,6 +1,7 @@
 package com.pigeonskyrace.dto.request;
 
 import com.pigeonskyrace.model.PigeonSaisonCompetition;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import org.springframework.data.annotation.CreatedDate;
@@ -11,8 +12,8 @@ import java.time.LocalDateTime;
 
 public record ResultatRequestDTO (
 
-        String numeroBague,
-    LocalDateTime dateArrivée
+        @NotNull String numeroBague,
+        @NotNull LocalDateTime dateArrivee
 
 
 ){}

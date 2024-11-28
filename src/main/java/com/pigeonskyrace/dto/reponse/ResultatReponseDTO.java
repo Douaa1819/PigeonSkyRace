@@ -13,8 +13,8 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 public class ResultatReponseDTO {
-       private ObjectId id;
-        private Date dateArrivee;
+       private String id;
+        private LocalDateTime dateArrivee;
 
         private Double distance;
 
@@ -22,10 +22,5 @@ public class ResultatReponseDTO {
 
         private Double points;
 
-        @DBRef
-        PigeonSaisonCompetition pigeonSaisonCompetition;
-
-        @CreatedDate
-        LocalDateTime dateCréation;
 
 }

@@ -13,18 +13,24 @@ import org.mapstruct.Named;
 public interface PigeonSaisonCompetitionMapper {
 
     @Mappings({
-            @Mapping(source = "saisonPigeonId", target = "saisonPigeonId", qualifiedByName = "stringToObjectId"),
-            @Mapping(source = "competitionId", target = "competitionId", qualifiedByName = "stringToObjectId"),
-            @Mapping(target = "id", ignore = true)
+            @Mapping(target = "id", ignore = true),
+            @Mapping(source = "saisonPigeonId", target = "saisonPigeon.id"),
+            @Mapping(source = "competitionId", target = "competition.id")
     })
     PigeonSaisonCompetition toEntity(PigeonSaisonCompetitionRequestDTO requestDTO);
 
     @Mappings({
             @Mapping(source = "id", target = "id", qualifiedByName = "objectIdToString"),
-            @Mapping(source = "saisonPigeonId", target = "saisonPigeonId", qualifiedByName = "objectIdToString"),
-            @Mapping(source = "competitionId", target = "competitionId", qualifiedByName = "objectIdToString")
+            @Mapping(target = "saisonPigeonId",expression = "java(entity.getSaisonPigeon().getId().toHexString())"),
+            @Mapping(target = "competitionId",expression = "java(entity.getCompetition().getId().toHexString())"),
     })
     PigeonSaisonCompetitionResponseDTO toResponseDTO(PigeonSaisonCompetition entity);
+
+    @Mappings({
+    })
+    PigeonSaisonCompetitionRequestDTO toRequestDTO(PigeonSaisonCompetition pigeonSaisonCompetition);
+
+
 
     // Méthode pour convertir un ObjectId en String
     @Named("objectIdToString")  // Ajoutez l'annotation @Named
@@ -37,4 +43,9 @@ public interface PigeonSaisonCompetitionMapper {
     default ObjectId stringToObjectId(String id) {
         return id != null && !id.isEmpty() ? new ObjectId(id) : null;
     }
+
+    default ObjectId map(String id) {
+        return id != null && !id.isEmpty() ? new ObjectId(id) : null;
+    }
+
 }

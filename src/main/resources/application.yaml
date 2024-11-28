@@ -10,7 +10,14 @@ spring:
       database: pigeonSkyRace
       uri: mongodb://admin:admin@mongodb:27017/pigeonSkyRace
 
+  jackson:
+    date-format: yyyy-MM-dd'T'HH:mm:ss
+    time-zone: UTC
+
 logging:
   level:
     org:
       springframework: DEBUG
+
+server:
+  port: 8082
