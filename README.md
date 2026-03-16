@@ -1,154 +1,132 @@
-# Gestion des Compétitions de Pigeons Voyageurs 🕊️
+# 🕊️ Pigeon Competition Management
 
-## Contexte du Projet 🎯
-Ce projet vise à gérer les compétitions organisées par la **Fédération Marocaine des Pigeons Voyageurs**, impliquant plusieurs éleveurs participant à des courses réparties sur trois étapes : **vitesse**, **demi-fond** et **fond**.  
-L'objectif est de garantir l'intégrité de la compétition grâce à une application respectant des règles strictes et permettant une gestion optimale des événements.
-
----
-
-## Fonctionnalités Principales 🚀
-
-### Pour les Éleveurs 🦜
-- **Enregistrement** :
-  - Création de compte avec :
-    - Nom unique de colombier.
-    - Nom d’utilisateur et mot de passe.
-    - Coordonnées GPS du colombier.
-- **Gestion des pigeons** :
-  - Ajout de pigeons :
-    - Numéro de bague unique.
-    - Sexe, âge, couleur, et image.
-
-### Pour l'Organisateur 🧑‍🏫
-- **Gestion des compétitions** :
-  - Définir des compétitions avec :
-    - Nom, coordonnées GPS du point de lâcher.
-    - Date/heure de départ et distance prévisionnelle.
-  - Ajouter des pigeons participants via leur numéro de bague.
-  - Clôturer une compétition et déclencher le calcul des résultats.
-- **Upload des données collectées** :
-  - Heure d'arrivée et numéro de bague des pigeons.
-- **Consultation et export des résultats** :
-  - Génération de fichiers PDF des résultats.
+## 🎯 Project Context
+This project manages competitions organized by the **Moroccan Federation of Racing Pigeons**, involving multiple breeders participating in three race types: **speed**, **mid-distance**, and **long-distance**.  
+The goal is to ensure competition integrity through an application that enforces strict rules and optimizes event management.
 
 ---
 
-## Calcul des Résultats 📊
-1. **Collecte des données** :
-   - Heure d’arrivée et numéro de bague des pigeons.
-2. **Calcul de la distance** :
-   - Utilisation de la **formule de Haversine** pour mesurer la distance entre deux points GPS.
-3. **Calcul du temps de vol** :
-   - Différence entre l’heure d’arrivée et l’heure de lâcher.
-4. **Calcul de la vitesse** :
-   - Vitesse = Distance parcourue / Temps de vol.
-   - Ajustement avec un coefficient basé sur la distance moyenne des pigeons.
-5. **Classement** :
-   - Classement des pigeons selon la vitesse, de la plus rapide à la plus lente.
-6. **Attribution des points** :
-   - Points basés sur le classement et le pourcentage d’admission.
-   - Cumul des points des 5 premiers pigeons par colombier pour un classement général.
+## 🚀 Key Features
+
+### For Breeders 🦜
+- **Registration**:
+  - Create an account with:
+    - Unique loft name
+    - Username & password
+    - GPS coordinates of the loft
+- **Pigeon Management**:
+  - Add pigeons with:
+    - Unique ring number
+    - Gender, age, color, and image
+
+### For Organizers 🧑‍🏫
+- **Competition Management**:
+  - Define competitions with:
+    - Name, GPS coordinates of the release point
+    - Start date/time and expected distance
+  - Add participating pigeons via ring numbers
+  - Close competitions and trigger result calculation
+- **Data Upload**:
+  - Arrival times and pigeon ring numbers
+- **Results Viewing & Export**:
+  - Generate PDF reports of competition results
 
 ---
 
-## Affichage des Résultats 📈
-- Résultats par course avec :
-  - **Colombier**, **Numéro de bague**, **Heure d’arrivée**, **Distance**, **Vitesse**, **Points**.
-- Classement général automatique pour consultation/export.
+## 📊 Result Calculation
+1. **Data Collection**: Record pigeon arrival times and ring numbers  
+2. **Distance Calculation**: Using the **Haversine formula** to compute distances between GPS points  
+3. **Flight Time**: Difference between release time and arrival time  
+4. **Speed Calculation**:  
+   - Speed = Distance / Flight Time  
+   - Adjusted by a coefficient based on average distance of pigeons  
+5. **Ranking**: Pigeons ranked by speed, fastest to slowest  
+6. **Point Allocation**:  
+   - Points based on ranking and admission percentage  
+   - Total points of top 5 pigeons per loft for overall leaderboard
 
 ---
 
-## Exigences Techniques ⚙️
-- **Backend** : Développement de l’API avec **Spring Boot**.
-- **Base de données** : **MongoDB**.
-- **Architecture** :
-  - Application structurée en plusieurs couches (Controller, Service, Repository).
-- **Validation des données** : Obligatoire pour garantir l'intégrité des informations.
-- **Gestion des exceptions** : Centralisée pour une meilleure gestion des erreurs.
-- **Tests unitaires** : Requis pour assurer la fiabilité du code.
-- **Configuration** : Fichier de configuration au format **YAML**.
+## 📈 Results Display
+- Results per race include:
+  - **Loft**, **Ring Number**, **Arrival Time**, **Distance**, **Speed**, **Points**
+- Automatic general ranking for viewing/export
 
 ---
 
-## Installation et Lancement 🚀
+## ⚙️ Technical Requirements
+- **Backend**: Spring Boot REST API  
+- **Database**: MongoDB  
+- **Architecture**: Layered application (Controller → Service → Repository)  
+- **Data Validation**: Ensures integrity of information  
+- **Exception Handling**: Centralized for consistent error management  
+- **Unit Testing**: Ensures code reliability  
+- **Configuration**: YAML-based configuration files  
 
-### Prérequis 📋
-- **Java 17+** ☕
-- **Maven** 🔨
-- **MongoDB** 🗄️
+---
 
+## 🐳 Docker Installation (Optional)
+Use Docker to run MongoDB and Mongo Express:
 
-
-## Installation avec Docker 🐳
-
-Si vous souhaitez utiliser Docker pour configurer l'application avec MongoDB et Mongo Express, voici les étapes à suivre.
-
-### Docker Compose 📝
-
-Vous pouvez utiliser le fichier `docker-compose.yml` pour configurer MongoDB et Mongo Express.
-
-Lancez Docker Compose :
-
+1. Launch Docker Compose:  
 ```bash
 docker-compose up -d
 ```
 
-## Architecture du Projet 🏗️
+## 🏗️ Project Architecture
 
 ### Backend
 
-Le backend de l'application est développé avec **Spring Boot**, un framework Java permettant de créer des applications web et des services RESTful de manière simple et rapide.
+Built with Spring Boot, providing RESTful services and web endpoints.
 
-### Base de Données
+### Database
 
-La base de données utilisée est **MongoDB**, un système de gestion de base de données NoSQL avec un modèle de données flexible, qui s'adapte facilement aux besoins de l'application.
+MongoDB, a flexible NoSQL database, storing all competition, pigeon, and breeder data.
 
-### Modèle de Données
+### Data Model
 
-Le modèle de données est géré à travers des **DTOs** (Data Transfer Objects) qui permettent de transmettre des données de manière structurée entre différentes couches de l'application.
+Data is transferred via DTOs (Data Transfer Objects) to structure information between application layers.
 
 ### MapStruct
 
-**MapStruct** est utilisé pour le mappage automatique entre les DTOs et les entités. Cela simplifie la conversion des objets et améliore la lisibilité du code.
-
+Used for automatic mapping between DTOs and entities, improving code readability and reducing boilerplate.
 ### Lombok
 
-**Lombok** est utilisé pour simplifier le code en générant automatiquement des méthodes getter, setter, des constructeurs, et autres méthodes utilitaires, afin de réduire la boilerplate code.
+**Lombok** Generates getters, setters, constructors, and other utility methods automatically.
 
 ### Docker
 
-Le projet utilise **Docker** pour faciliter l'exécution de MongoDB et de Mongo Express, une interface web permettant d'interagir facilement avec MongoDB.
+The project uses **Docker** to facilitate the execution of MongoDB and Mongo Express, a web interface that makes it easy to interact with MongoDB.
 
-## Prérequis 🛠️
+## Prerequisites 🛠️
 
 Avant de démarrer l'application, assurez-vous d'avoir les éléments suivants installés :
 
-- **Java 11 ou supérieur** : Vous pouvez télécharger [Java JDK](https://adoptopenjdk.net/).
-- **Maven** : Utilisé pour la gestion des dépendances et la compilation du projet. Téléchargez-le [ici](https://maven.apache.org/).
-- **Docker** : Utilisé pour exécuter MongoDB et Mongo Express dans des conteneurs. Installez Docker [ici](https://www.docker.com/products/docker-desktop).
+- **Java 11 +** : [Download JDK](https://adoptopenjdk.net/).
+- **Maven** : [Download Maven](https://maven.apache.org/).
+- **Docker** : [for MongoDB and Mongo Express](https://www.docker.com/products/docker-desktop).
 
-## Lancer l'Application Spring Boot 🏃‍♂️
+## Running the Application🏃‍♂️
 
-### 1. Clonez le dépôt
-
-Clonez le projet depuis GitHub avec la commande suivante :
+### 1. Clone the repository:
 
 ```bash
 git clone https://github.com/erradaoumaimaa/PigeonSkyRace.git
 ```
-## Lancer l'application Spring Boot 🏃‍♂️
-
-### 1. Accédez au répertoire du projet
-
-Déplacez-vous dans le répertoire du projet cloné :
+## 2. Navigate to the project directory:
 
 ```bash
 cd PigeonSkyRace
 ```
-## 2. Compilez le projet avec Maven
-
-Utilisez Maven pour nettoyer et compiler le projet :
+## 3. Build the project with Maven:
 
 ```bash
 mvn clean install
 ```
+
+## 4. Run the Spring Boot application:
+
+```bash
+mvn spring-boot:run
+```
+
