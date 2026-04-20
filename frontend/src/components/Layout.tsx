@@ -1,15 +1,21 @@
-import { Link, Outlet } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Link, Outlet, useLocation } from 'react-router-dom';
+import { FloatingOrbs } from '@/components/ambient/FloatingOrbs';
+import { SkyBackground } from '@/components/ambient/SkyBackground';
 import { useAuth } from '@/context/AuthContext';
 import { useTheme } from '@/context/ThemeContext';
 
 export function Layout() {
   const { user, logout } = useAuth();
   const { theme, toggle } = useTheme();
+  const location = useLocation();
 
   return (
-    <>
+    <div className="app-root">
+      <SkyBackground />
+      <FloatingOrbs />
       <header className="nav">
-        <Link to="/" style={{ fontWeight: 700, fontSize: '1.1rem', color: 'var(--text)' }}>
+        <Link to="/" className="nav-brand">
           PigeonSkyRace
         </Link>
         <nav className="nav-links">
@@ -21,7 +27,7 @@ export function Layout() {
               {user.role === 'BREEDER' && <Link to="/breeder">Breeder</Link>}
               <Link to="/competitions">Competitions</Link>
               <Link to="/pigeons">Pigeons</Link>
-              <Link to="/results">Results</Link>
+              <Link to="/results">Rankings</Link>
             </>
           )}
           <button type="button" className="btn btn-ghost" onClick={toggle} aria-label="Toggle theme">
@@ -39,9 +45,20 @@ export function Layout() {
           )}
         </nav>
       </header>
-      <main className="page">
-        <Outlet />
+      <main className="app-main">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={location.pathname}
+            className="page"
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <Outlet />
+          </motion.div>
+        </AnimatePresence>
       </main>
-    </>
+    </div>
   );
 }

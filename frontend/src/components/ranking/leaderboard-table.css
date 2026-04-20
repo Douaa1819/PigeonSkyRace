@@ -1,0 +1,123 @@
+.leaderboard-table-wrap {
+  overflow: auto;
+  border-radius: 16px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: var(--card-lift);
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.leaderboard-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: rgba(8, 47, 73, 0.55);
+  backdrop-filter: blur(8px);
+}
+
+[data-theme='light'] .leaderboard-table thead {
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.leaderboard-table th {
+  text-align: left;
+  padding: 0.85rem 1rem;
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.leaderboard-table td {
+  padding: 0.75rem 1rem;
+  vertical-align: middle;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+[data-theme='light'] .leaderboard-table td {
+  border-top-color: rgba(15, 23, 42, 0.06);
+}
+
+.leaderboard-table__row--spotlight td {
+  background: linear-gradient(90deg, rgba(212, 175, 55, 0.08), transparent 55%);
+}
+
+.leaderboard-table__rank {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.4rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: 10px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  background: rgba(15, 23, 42, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+[data-theme='light'] .leaderboard-table__rank {
+  background: rgba(255, 255, 255, 0.65);
+}
+
+.leaderboard-table__rank--gold {
+  background: linear-gradient(135deg, #fbbf24, #d97706);
+  color: #0f172a;
+  border-color: rgba(251, 191, 36, 0.6);
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.35);
+}
+
+.leaderboard-table__rank--silver {
+  background: linear-gradient(135deg, #e2e8f0, #94a3b8);
+  color: #0f172a;
+}
+
+.leaderboard-table__rank--bronze {
+  background: linear-gradient(135deg, #fdba74, #ea580c);
+  color: #0f172a;
+}
+
+.leaderboard-table__athlete {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.leaderboard-table__thumb {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.leaderboard-table__title {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.leaderboard-table__sub {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-top: 0.1rem;
+}
+
+.leaderboard-table__num {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.leaderboard-table__time {
+  font-size: 0.82rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
