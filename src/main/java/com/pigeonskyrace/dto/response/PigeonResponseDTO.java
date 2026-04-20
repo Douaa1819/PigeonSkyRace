@@ -1,7 +1,6 @@
-package com.pigeonskyrace.dto.reponse;
+package com.pigeonskyrace.dto.response;
 
 import com.pigeonskyrace.model.enums.Sexe;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -22,5 +21,4 @@ public class PigeonResponseDTO {
         this.age = age;
         this.couleur = couleur;
     }
-
 }

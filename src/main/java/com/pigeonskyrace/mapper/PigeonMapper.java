@@ -1,6 +1,6 @@
 package com.pigeonskyrace.mapper;
 
-import com.pigeonskyrace.dto.reponse.PigeonResponseDTO;
+import com.pigeonskyrace.dto.response.PigeonResponseDTO;
 import com.pigeonskyrace.dto.request.PigeonRequestDTO;
 import com.pigeonskyrace.model.Pigeon;
 import com.pigeonskyrace.model.enums.Sexe;

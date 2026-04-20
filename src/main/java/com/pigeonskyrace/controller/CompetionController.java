@@ -1,7 +1,7 @@
 package com.pigeonskyrace.controller;
 
 
-import com.pigeonskyrace.dto.reponse.CompetionReponseDTO;
+import com.pigeonskyrace.dto.response.CompetionResponseDTO;
 import com.pigeonskyrace.dto.request.CompetionRequestDTO;
 import com.pigeonskyrace.mapper.CompetionMapper;
 import com.pigeonskyrace.model.Competion;
@@ -28,7 +28,7 @@ public class CompetionController {
     private  final SaisonService  saisonService;
 
     @PostMapping("")
-    public ResponseEntity<CompetionReponseDTO> createCompetion(@RequestBody @Valid CompetionRequestDTO competionRequestDTO) {
+    public ResponseEntity<CompetionResponseDTO> createCompetion(@RequestBody @Valid CompetionRequestDTO competionRequestDTO) {
         // Convertir CompetionRequestDTO en entité Competion
         Competion competion = competionMapper.toEntity(competionRequestDTO);
 
@@ -48,7 +48,7 @@ public class CompetionController {
         saisonService.save(saison);
 
         // Convertir l'entité compétitions sauvegardée en DTO
-        CompetionReponseDTO responseDto = competionMapper.toDto(savedCompetion);
+        CompetionResponseDTO responseDto = competionMapper.toDto(savedCompetion);
 
         // Retourner la compétition créée avec un statut 201 Created
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
@@ -56,9 +56,9 @@ public class CompetionController {
 
 
     @GetMapping("")
-    public ResponseEntity<List<CompetionReponseDTO>> getAllCompetions() {
+    public ResponseEntity<List<CompetionResponseDTO>> getAllCompetions() {
         List<Competion> competions = competionService.findAll();
-        List<CompetionReponseDTO> competionsDTO = competions.stream()
+        List<CompetionResponseDTO> competionsDTO = competions.stream()
                 .map(competionMapper::toDto)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(competionsDTO);

@@ -1,7 +1,7 @@
 package com.pigeonskyrace.mapper;
 
 import com.pigeonskyrace.dto.request.PigeonSaisonCompetitionRequestDTO;
-import com.pigeonskyrace.dto.reponse.PigeonSaisonCompetitionResponseDTO;
+import com.pigeonskyrace.dto.response.PigeonSaisonCompetitionResponseDTO;
 import com.pigeonskyrace.model.PigeonSaisonCompetition;
 import org.bson.types.ObjectId;
 import org.mapstruct.Mapper;

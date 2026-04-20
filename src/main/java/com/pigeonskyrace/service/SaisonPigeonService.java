@@ -1,6 +1,6 @@
 package com.pigeonskyrace.service;
 
-import com.pigeonskyrace.dto.reponse.SaisonPigeonResponseDTO;
+import com.pigeonskyrace.dto.response.SaisonPigeonResponseDTO;
 import com.pigeonskyrace.dto.request.PigeonRequestDTO;
 import com.pigeonskyrace.dto.request.SaisonPigeonRequestDTO;
 import com.pigeonskyrace.exception.EntityNotFoundException;

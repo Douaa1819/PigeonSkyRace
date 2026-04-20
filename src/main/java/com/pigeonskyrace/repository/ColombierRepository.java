@@ -4,8 +4,11 @@ import com.pigeonskyrace.model.Colombier;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ColombierRepository extends MongoRepository<Colombier, ObjectId> {
-    Optional<Colombier>findById(ObjectId id);
+    Optional<Colombier> findById(ObjectId id);
+
+    List<Colombier> findByUser_Id(ObjectId userId);
 }

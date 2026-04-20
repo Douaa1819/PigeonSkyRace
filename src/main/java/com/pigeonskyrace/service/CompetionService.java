@@ -1,6 +1,6 @@
 package com.pigeonskyrace.service;
 
-import com.pigeonskyrace.dto.reponse.CompetionReponseDTO;
+import com.pigeonskyrace.dto.response.CompetionResponseDTO;
 import com.pigeonskyrace.exception.EntityNotFoundException;
 import com.pigeonskyrace.mapper.CompetionMapper;
 import com.pigeonskyrace.model.Competion;
@@ -34,7 +34,7 @@ public class CompetionService {
     }
 
 
-    public CompetionReponseDTO getCompetitionid(ObjectId competitionId) {
+    public CompetionResponseDTO getCompetitionid(ObjectId competitionId) {
 
         return competionRepository.findById(competitionId)
                 .map(mapper::toDto)

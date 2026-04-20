@@ -1,15 +1,14 @@
 package com.pigeonskyrace.controller;
 
 import com.lowagie.text.DocumentException;
-import com.pigeonskyrace.dto.reponse.CompetionReponseDTO;
+import com.pigeonskyrace.dto.response.CompetionResponseDTO;
 import com.pigeonskyrace.exception.EntityNotFoundException;
 import com.pigeonskyrace.model.Resultat;
 import com.pigeonskyrace.service.CompetionService;
 import com.pigeonskyrace.service.PdfGenerationService;
 import com.pigeonskyrace.service.ResultatService;
-import com.pigeonskyrace.utils.CompetitionId;
+import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,20 +20,17 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class PdfController {
 
-    @Autowired
-    private CompetionService competionService;
+    private final CompetionService competionService;
+    private final PdfGenerationService pdfGenerationService;
+    private final ResultatService resultatService;
 
-    @Autowired
-    private PdfGenerationService pdfGenerationService;
-
-    @Autowired
-    private ResultatService resultatService;
     @GetMapping("/api/v1/resultats/{competitionId}/pdf")
     public ResponseEntity<byte[]> generateCompetitionPdf(@PathVariable String competitionId) throws DocumentException, IOException {
-    ObjectId  competition=  new ObjectId(competitionId);
-        CompetionReponseDTO competionResult = competionService.getCompetitionid(competition);
+        ObjectId competition = new ObjectId(competitionId);
+        CompetionResponseDTO competionResult = competionService.getCompetitionid(competition);
 
         List<Resultat> resultats = resultatService.getResultatsByCompetitionId(competition);
         if (resultats.isEmpty()) {
@@ -51,5 +47,4 @@ public class PdfController {
                 .headers(headers)
                 .body(pdfBytes);
     }
-
 }

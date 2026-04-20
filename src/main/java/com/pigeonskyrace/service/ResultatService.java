@@ -1,8 +1,8 @@
 package com.pigeonskyrace.service;
 
-import com.pigeonskyrace.dto.reponse.CompetionReponseDTO;
-import com.pigeonskyrace.dto.reponse.ResultatReponseDTO;
-import com.pigeonskyrace.dto.reponse.SaisonPigeonResponseDTO;
+import com.pigeonskyrace.dto.response.CompetionResponseDTO;
+import com.pigeonskyrace.dto.response.ResultatResponseDTO;
+import com.pigeonskyrace.dto.response.SaisonPigeonResponseDTO;
 import com.pigeonskyrace.dto.request.ResultatRequestDTO;
 import com.pigeonskyrace.exception.EntityNotFoundException;
 import com.pigeonskyrace.mapper.CompetionMapper;
@@ -36,7 +36,7 @@ public class ResultatService {
     /**
      * Crée un résultat pour un pigeon dans une compétition et calcule sa vitesse.
      */
-    public ResultatReponseDTO createResult(ResultatRequestDTO resultatRequestDTO, CompetionReponseDTO competition) throws ChangeSetPersister.NotFoundException {
+    public ResultatResponseDTO createResult(ResultatRequestDTO resultatRequestDTO, CompetionResponseDTO competition) throws ChangeSetPersister.NotFoundException {
         log.info("Début de la création du résultat pour le numéro de bague : {}", resultatRequestDTO.numeroBague());
 
         Pigeon pigeon = pigeonService.findByNumeroBague(resultatRequestDTO.numeroBague());
@@ -89,16 +89,16 @@ public class ResultatService {
         log.info("Résultat sauvegardé avec succès : {}", resultat);
 
         // Retourner le résultat mappé en DTO
-        ResultatReponseDTO resultatReponseDTO = mapper.toReponseDTO(resultat);
-        log.info("Résultat retourné : {}", resultatReponseDTO);
+        ResultatResponseDTO ResultatResponseDTO = mapper.toResponseDTO(resultat);
+        log.info("Résultat retourné : {}", ResultatResponseDTO);
 
-        return resultatReponseDTO;
+        return ResultatResponseDTO;
     }
 
     /**
      * Calcule le classement et les points pour tous les résultats d'une compétition.
      */
-    public List<ResultatReponseDTO> calculatePoint(CompetionReponseDTO competitionDto) {
+    public List<ResultatResponseDTO> calculatePoint(CompetionResponseDTO competitionDto) {
         // Utilisation de la méthode modifiée dans ResultatRepository
         List<PigeonSaisonCompetition> pigeonSaisonCompetitions = pigeonSaisonCompetitionService.findByCompetition(competionMapper.toEntityy(competitionDto));
         List<Resultat> resultats = new ArrayList<>();
@@ -133,7 +133,7 @@ public class ResultatService {
         }
 
         return resultats.stream()
-                .map(mapper::toReponseDTO)
+                .map(mapper::toResponseDTO)
                 .toList();
     }
 

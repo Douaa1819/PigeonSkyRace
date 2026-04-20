@@ -3,6 +3,9 @@ HELP.md
 .env.*
 !.env.example
 
+frontend/node_modules/
+frontend/dist/
+
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/

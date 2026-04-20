@@ -1,16 +1,15 @@
-package com.pigeonskyrace.dto.reponse;
+package com.pigeonskyrace.dto.response;
 
-import com.pigeonskyrace.model.Competion;
 import lombok.Data;
 
 import java.util.Date;
 import java.util.List;
 
 @Data
-public class SaisonReponseDTO {
+public class SaisonResponseDTO {
     private String id;
     private Date date;
     private String nom;
     private String description;
-    private List<CompetionReponseDTO> competions;
+    private List<CompetionResponseDTO> competions;
 }

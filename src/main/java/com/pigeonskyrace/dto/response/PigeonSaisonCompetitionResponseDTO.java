@@ -1,6 +1,5 @@
-package com.pigeonskyrace.dto.reponse;
+package com.pigeonskyrace.dto.response;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data

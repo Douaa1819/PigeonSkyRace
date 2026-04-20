@@ -1,6 +1,6 @@
 package com.pigeonskyrace.mapper;
 
-import com.pigeonskyrace.dto.reponse.CompetionReponseDTO;
+import com.pigeonskyrace.dto.response.CompetionResponseDTO;
 import com.pigeonskyrace.dto.request.CompetionRequestDTO;
 import com.pigeonskyrace.model.Competion;
 import org.bson.types.ObjectId;
@@ -9,7 +9,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
-import org.springframework.stereotype.Component;
+
 @Mapper(componentModel = "spring")
 public interface CompetionMapper {
 
@@ -24,7 +24,7 @@ public interface CompetionMapper {
             @Mapping(source = "pourcentageAdmission", target = "pourcentageAdmission"),
             @Mapping(source = "saison.id", target = "saisonId", qualifiedByName = "objectIdToString")
     })
-    CompetionReponseDTO toDto(Competion competition);
+    CompetionResponseDTO toDto(Competion competition);
 
     @Mappings({
             @Mapping(source = "nom", target = "nom"),
@@ -43,10 +43,10 @@ public interface CompetionMapper {
             @Mapping(source = "longitudeGPS", target = "longitudeGPS"),
             @Mapping(source = "nbPigeons", target = "nombrePigeons"),
             @Mapping(target = "pourcentageAdmission", constant = "25.0"),
-          @Mapping(target = "id", expression= "java(new ObjectId(competitionReponseDTO.getId()))"),
+          @Mapping(target = "id", expression= "java(new ObjectId(competitionResponseDTO.getId()))"),
             @Mapping(target = "saison", ignore = true)
     })
-    Competion toEntityy(CompetionReponseDTO competitionReponseDTO);
+    Competion toEntityy(CompetionResponseDTO competitionResponseDTO);
 
 
     // Map ObjectId to String

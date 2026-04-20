@@ -1,7 +1,7 @@
 package com.pigeonskyrace.mapper;
 
-import com.pigeonskyrace.dto.reponse.ColombierReponseDTO;
-import com.pigeonskyrace.dto.reponse.PigeonResponseDTO;
+import com.pigeonskyrace.dto.response.ColombierResponseDTO;
+import com.pigeonskyrace.dto.response.PigeonResponseDTO;
 import com.pigeonskyrace.dto.request.ColombierRequestDTO;
 import com.pigeonskyrace.model.Colombier;
 import com.pigeonskyrace.model.Pigeon;
@@ -42,5 +42,5 @@ public interface ColombierMapper {
     @Mapping(source = "user.id", target = "userId", qualifiedByName = "objectIdToString")
     @Mapping(source = "id", target = "id", qualifiedByName = "objectIdToString")
     @Mapping(source = "pigeons", target = "pigeons", qualifiedByName = "toPigeonResponseDTOList")
-    ColombierReponseDTO toColombierResponseDTO(Colombier colombier);
+    ColombierResponseDTO toColombierResponseDTO(Colombier colombier);
 }

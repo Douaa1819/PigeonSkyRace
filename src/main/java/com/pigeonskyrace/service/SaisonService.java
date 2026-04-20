@@ -1,6 +1,6 @@
 package com.pigeonskyrace.service;
 
-import com.pigeonskyrace.dto.reponse.SaisonReponseDTO;
+import com.pigeonskyrace.dto.response.SaisonResponseDTO;
 import com.pigeonskyrace.dto.request.SaisonRequestDTO;
 import com.pigeonskyrace.exception.EntityNotFoundException;
 import com.pigeonskyrace.mapper.SaisonMapper;
@@ -24,7 +24,7 @@ public class SaisonService {
         this.saisonMapper = saisonMapper;
     }
 
-    public SaisonReponseDTO createSaison(SaisonRequestDTO saisonRequestDTO) {
+    public SaisonResponseDTO createSaison(SaisonRequestDTO saisonRequestDTO) {
 
         Saison saison = saisonMapper.toEntity(saisonRequestDTO);
 

@@ -1,7 +1,7 @@
 package com.pigeonskyrace.service;
 
-import com.pigeonskyrace.dto.reponse.ColombierReponseDTO;
-import com.pigeonskyrace.dto.reponse.PigeonResponseDTO;
+import com.pigeonskyrace.dto.response.ColombierResponseDTO;
+import com.pigeonskyrace.dto.response.PigeonResponseDTO;
 import com.pigeonskyrace.dto.request.PigeonRequestDTO;
 import com.pigeonskyrace.exception.EntityNotFoundException;
 import com.pigeonskyrace.mapper.PigeonMapper;

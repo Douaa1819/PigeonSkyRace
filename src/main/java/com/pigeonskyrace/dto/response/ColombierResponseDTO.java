@@ -1,13 +1,11 @@
-package com.pigeonskyrace.dto.reponse;
+package com.pigeonskyrace.dto.response;
 
 import lombok.Data;
-import org.bson.types.ObjectId;
 
 import java.util.List;
 
-
 @Data
-public class ColombierReponseDTO {
+public class ColombierResponseDTO {
     private String id;
     private String nomColombier;
     private double coordonneeGPSlatitude;

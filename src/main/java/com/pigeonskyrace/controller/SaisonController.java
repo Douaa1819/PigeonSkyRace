@@ -1,7 +1,7 @@
 package com.pigeonskyrace.controller;
 
 
-import com.pigeonskyrace.dto.reponse.SaisonReponseDTO;
+import com.pigeonskyrace.dto.response.SaisonResponseDTO;
 import com.pigeonskyrace.dto.request.SaisonRequestDTO;
 import com.pigeonskyrace.mapper.SaisonMapper;
 import com.pigeonskyrace.model.Saison;
@@ -27,16 +27,16 @@ public class SaisonController {
 
 
     @PostMapping("")
-    public ResponseEntity<SaisonReponseDTO> createSaison(@RequestBody @Valid SaisonRequestDTO saisonRequestDTO) {
-        SaisonReponseDTO responseDTO = saisonService.createSaison(saisonRequestDTO);
+    public ResponseEntity<SaisonResponseDTO> createSaison(@RequestBody @Valid SaisonRequestDTO saisonRequestDTO) {
+        SaisonResponseDTO responseDTO = saisonService.createSaison(saisonRequestDTO);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
 
     @GetMapping("")
-    public ResponseEntity<List<SaisonReponseDTO>> getAllSaisons() {
+    public ResponseEntity<List<SaisonResponseDTO>> getAllSaisons() {
         List<Saison> saisons = saisonService.findAll();
-        List<SaisonReponseDTO> responseDTOs = saisons.stream()
+        List<SaisonResponseDTO> responseDTOs = saisons.stream()
                 .map(saisonMapper::toDto)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(responseDTOs);

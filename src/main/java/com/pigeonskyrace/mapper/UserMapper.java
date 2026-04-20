@@ -1,6 +1,6 @@
 package com.pigeonskyrace.mapper;
 
-import com.pigeonskyrace.dto.reponse.UserResponseDTO;
+import com.pigeonskyrace.dto.response.UserResponseDTO;
 import com.pigeonskyrace.dto.request.RegisterRequestDTO;
 import com.pigeonskyrace.model.User;
 import org.bson.types.ObjectId;
@@ -15,7 +15,6 @@ public class UserMapper {
         user.setName(request.getName());
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword());
-        user.setRole(request.getRole());
         return user;
     }
 

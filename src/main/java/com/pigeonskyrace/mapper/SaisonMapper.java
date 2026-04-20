@@ -1,7 +1,7 @@
 package com.pigeonskyrace.mapper;
 
-import com.pigeonskyrace.dto.reponse.SaisonReponseDTO;
-import com.pigeonskyrace.dto.reponse.CompetionReponseDTO;  // Import CompetionReponseDTO
+import com.pigeonskyrace.dto.response.SaisonResponseDTO;
+import com.pigeonskyrace.dto.response.CompetionResponseDTO;  // Import CompetionResponseDTO
 import com.pigeonskyrace.dto.request.SaisonRequestDTO;
 import com.pigeonskyrace.model.Saison;
 import com.pigeonskyrace.model.Competion;
@@ -23,7 +23,7 @@ public interface SaisonMapper {
             @Mapping(source = "description", target = "description"),
             @Mapping(source = "competions", target = "competions")
     })
-    SaisonReponseDTO toDto(Saison saison);
+    SaisonResponseDTO toDto(Saison saison);
 
     @Mappings({
             @Mapping(source = "date", target = "date"),

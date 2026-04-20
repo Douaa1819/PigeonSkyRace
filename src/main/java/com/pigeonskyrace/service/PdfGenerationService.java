@@ -2,7 +2,7 @@ package com.pigeonskyrace.service;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
-import com.pigeonskyrace.dto.reponse.CompetionReponseDTO;
+import com.pigeonskyrace.dto.response.CompetionResponseDTO;
 import com.pigeonskyrace.model.Resultat;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class PdfGenerationService {
 
-    public byte[] generateCompetitionResultPdf(CompetionReponseDTO competition, List<Resultat> resultats) throws DocumentException {
+    public byte[] generateCompetitionResultPdf(CompetionResponseDTO competition, List<Resultat> resultats) throws DocumentException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         Document document = new Document();
 

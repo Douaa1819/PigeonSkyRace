@@ -1,6 +1,6 @@
 package com.pigeonskyrace.controller;
 
-import com.pigeonskyrace.dto.reponse.SaisonPigeonResponseDTO;
+import com.pigeonskyrace.dto.response.SaisonPigeonResponseDTO;
 import com.pigeonskyrace.dto.request.SaisonPigeonRequestDTO;
 import com.pigeonskyrace.model.Pigeon;
 import com.pigeonskyrace.model.Saison;

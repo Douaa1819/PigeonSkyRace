@@ -1,8 +1,8 @@
 package com.pigeonskyrace.controller;
 
 
-import com.pigeonskyrace.dto.reponse.CompetionReponseDTO;
-import com.pigeonskyrace.dto.reponse.ResultatReponseDTO;
+import com.pigeonskyrace.dto.response.CompetionResponseDTO;
+import com.pigeonskyrace.dto.response.ResultatResponseDTO;
 import com.pigeonskyrace.dto.request.ResultatRequestDTO;
 import com.pigeonskyrace.model.Pigeon;
 import com.pigeonskyrace.service.CompetionService;
@@ -35,13 +35,13 @@ public class ResultatController {
 
 
     @PostMapping("/{competitionId}")
-    public ResponseEntity<ResponseApi<ResultatReponseDTO>> createResult(
+    public ResponseEntity<ResponseApi<ResultatResponseDTO>> createResult(
             @PathVariable String competitionId,
             @RequestBody @Valid ResultatRequestDTO requestDto) {
 
         try {
 
-            CompetionReponseDTO competitionDto = competionService.getCompetitionid(new ObjectId(competitionId));
+            CompetionResponseDTO competitionDto = competionService.getCompetitionid(new ObjectId(competitionId));
             log.info("Competition details retrieved: {}", competitionDto);
 
             log.info("Fetching pigeon details for bag number: {}", requestDto.numeroBague());
@@ -49,9 +49,9 @@ public class ResultatController {
 
             log.info("Pigeon found: {}", pigeon);
 
-            ResultatReponseDTO responseDto = resultatService.createResult(requestDto, competitionDto);
+            ResultatResponseDTO responseDto = resultatService.createResult(requestDto, competitionDto);
 
-            ResponseApi<ResultatReponseDTO> response = new ResponseApi<>(responseDto,
+            ResponseApi<ResultatResponseDTO> response = new ResponseApi<>(responseDto,
                     "Result successfully created for competition " + competitionId, HttpStatus.CREATED);
 
             return new ResponseEntity<>(response, HttpStatus.CREATED);
@@ -64,10 +64,10 @@ public class ResultatController {
 
 
     @GetMapping("/{competitionId}")
-    public ResponseEntity<List<ResultatReponseDTO>> calculateResults(@PathVariable String competitionId) {
-        CompetionReponseDTO competitionDto = competionService.getCompetitionid(new ObjectId(competitionId));
+    public ResponseEntity<List<ResultatResponseDTO>> calculateResults(@PathVariable String competitionId) {
+        CompetionResponseDTO competitionDto = competionService.getCompetitionid(new ObjectId(competitionId));
         log.info("Competition details retrieved: {}", competitionDto);
-        List<ResultatReponseDTO> results = resultatService.calculatePoint(competitionDto);
+        List<ResultatResponseDTO> results = resultatService.calculatePoint(competitionDto);
 
         return ResponseEntity.status(HttpStatus.OK).body(results);
     }

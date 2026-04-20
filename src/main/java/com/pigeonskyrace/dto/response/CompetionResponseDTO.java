@@ -1,13 +1,11 @@
-package com.pigeonskyrace.dto.reponse;
-import com.pigeonskyrace.model.Resultat;
-import jakarta.validation.constraints.NotNull;
+package com.pigeonskyrace.dto.response;
+
 import lombok.Data;
-import org.bson.types.ObjectId;
 
 import java.time.LocalDateTime;
 
 @Data
-public class CompetionReponseDTO {
+public class CompetionResponseDTO {
     private String id;
     private String nom;
     private double latitudeGPS;
@@ -17,6 +15,4 @@ public class CompetionReponseDTO {
     private double pourcentageAdmission = 25.0;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-
-
 }

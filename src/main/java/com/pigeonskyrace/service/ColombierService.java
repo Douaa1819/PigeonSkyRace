@@ -1,8 +1,7 @@
 package com.pigeonskyrace.service;
 
-import com.pigeonskyrace.dto.reponse.ColombierReponseDTO;
-import com.pigeonskyrace.dto.reponse.PigeonResponseDTO;
-import com.pigeonskyrace.dto.reponse.UserResponseDTO;
+import com.pigeonskyrace.dto.response.ColombierResponseDTO;
+import com.pigeonskyrace.dto.response.PigeonResponseDTO;
 import com.pigeonskyrace.dto.request.ColombierRequestDTO;
 import com.pigeonskyrace.exception.EntityNotFoundException;
 import com.pigeonskyrace.mapper.ColombierMapper;
@@ -11,6 +10,7 @@ import com.pigeonskyrace.model.Pigeon;
 import com.pigeonskyrace.model.User;
 import com.pigeonskyrace.repository.ColombierRepository;
 import com.pigeonskyrace.repository.PigeonRepository;
+import com.pigeonskyrace.model.enums.Role;
 import com.pigeonskyrace.repository.UserRepository;
 import com.pigeonskyrace.utils.Coordinates;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +30,7 @@ public class ColombierService {
     private final ColombierMapper colombierMapper;
     private final UserRepository userRepository;
 
-    public ColombierReponseDTO save(ColombierRequestDTO requestDTO, ObjectId userId) {
+    public ColombierResponseDTO save(ColombierRequestDTO requestDTO, ObjectId userId) {
         String userIdString = userId.toHexString();
         User user = userRepository.findById(userIdString)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -56,6 +56,16 @@ public class ColombierService {
 
     public List<Colombier> findAll() {
         return colombierRepository.findAll();
+    }
+
+    /**
+     * Breeders see only their lofts; organizers and admins see all.
+     */
+    public List<Colombier> findAllVisible(Role role, ObjectId userId) {
+        if (role == Role.ADMIN || role == Role.ORGANIZER) {
+            return colombierRepository.findAll();
+        }
+        return colombierRepository.findByUser_Id(userId);
     }
 
     public Optional<Colombier> findById(ObjectId id) {

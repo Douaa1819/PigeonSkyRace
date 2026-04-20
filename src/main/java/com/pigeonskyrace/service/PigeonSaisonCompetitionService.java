@@ -1,6 +1,6 @@
 package com.pigeonskyrace.service;
 
-import com.pigeonskyrace.dto.reponse.PigeonSaisonCompetitionResponseDTO;
+import com.pigeonskyrace.dto.response.PigeonSaisonCompetitionResponseDTO;
 import com.pigeonskyrace.dto.request.PigeonSaisonCompetitionRequestDTO;
 import com.pigeonskyrace.exception.EntityNotFoundException;
 import com.pigeonskyrace.mapper.PigeonSaisonCompetitionMapper;
