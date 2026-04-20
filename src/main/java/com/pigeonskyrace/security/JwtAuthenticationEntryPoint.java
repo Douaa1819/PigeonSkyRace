@@ -22,9 +22,13 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
                          AuthenticationException authException) throws IOException {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+
+        boolean expired = Boolean.TRUE.equals(request.getAttribute(SecurityRequestAttributes.JWT_EXPIRED));
+        String message = expired ? "Access token expired" : "Authentication required";
+
         ErrorDetails body = new ErrorDetails(
                 new Date(),
-                "Authentication required",
+                message,
                 request.getRequestURI()
         );
         objectMapper.writeValue(response.getOutputStream(), body);

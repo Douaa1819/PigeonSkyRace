@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class CompetionController {
     private final SaisonService saisonService;
 
     @PostMapping("")
+    @PreAuthorize("hasAnyRole('ADMIN','ORGANIZER')")
     public ResponseEntity<CompetionResponseDTO> createCompetion(@RequestBody @Valid CompetionRequestDTO competionRequestDTO) {
         // Convertir CompetionRequestDTO en entité Competion
         Competion competion = competionMapper.toEntity(competionRequestDTO);

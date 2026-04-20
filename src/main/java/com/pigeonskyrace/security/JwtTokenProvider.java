@@ -2,6 +2,8 @@ package com.pigeonskyrace.security;
 
 import com.pigeonskyrace.model.User;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
@@ -17,6 +19,12 @@ public class JwtTokenProvider {
 
     public JwtTokenProvider(JwtProperties jwtProperties) {
         this.jwtProperties = jwtProperties;
+    }
+
+    public enum TokenState {
+        VALID,
+        EXPIRED,
+        INVALID
     }
 
     public String createAccessToken(User user) {
@@ -39,13 +47,25 @@ public class JwtTokenProvider {
         return parseClaims(token).get("uid", String.class);
     }
 
-    public boolean validateToken(String token) {
+    /**
+     * Distinguishes expired vs malformed tokens for proper 401 messaging.
+     */
+    public TokenState resolveTokenState(String token) {
+        if (token == null || token.isBlank()) {
+            return TokenState.INVALID;
+        }
         try {
             parseClaims(token);
-            return true;
-        } catch (Exception e) {
-            return false;
+            return TokenState.VALID;
+        } catch (ExpiredJwtException e) {
+            return TokenState.EXPIRED;
+        } catch (JwtException | IllegalArgumentException e) {
+            return TokenState.INVALID;
         }
+    }
+
+    public boolean validateToken(String token) {
+        return resolveTokenState(token) == TokenState.VALID;
     }
 
     private Claims parseClaims(String token) {

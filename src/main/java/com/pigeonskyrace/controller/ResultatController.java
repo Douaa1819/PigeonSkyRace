@@ -8,15 +8,14 @@ import com.pigeonskyrace.model.Pigeon;
 import com.pigeonskyrace.service.CompetionService;
 import com.pigeonskyrace.service.PigeonService;
 import com.pigeonskyrace.service.ResultatService;
-import com.pigeonskyrace.utils.CompetitionId;
 import com.pigeonskyrace.utils.ResponseApi;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,6 +34,7 @@ public class ResultatController {
 
 
     @PostMapping("/{competitionId}")
+    @PreAuthorize("hasAnyRole('ADMIN','ORGANIZER')")
     public ResponseEntity<ResponseApi<ResultatResponseDTO>> createResult(
             @PathVariable String competitionId,
             @RequestBody @Valid ResultatRequestDTO requestDto) {

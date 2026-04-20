@@ -7,7 +7,6 @@ import com.pigeonskyrace.mapper.UserMapper;
 import com.pigeonskyrace.model.User;
 import com.pigeonskyrace.model.enums.Role;
 import com.pigeonskyrace.repository.UserRepository;
-import com.pigeonskyrace.security.JwtProperties;
 import com.pigeonskyrace.security.JwtTokenProvider;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
@@ -35,8 +34,6 @@ class UserServiceTest {
     private PasswordEncoder passwordEncoder;
     @Mock
     private JwtTokenProvider jwtTokenProvider;
-    @Mock
-    private JwtProperties jwtProperties;
 
     @InjectMocks
     private UserService userService;
@@ -68,12 +65,10 @@ class UserServiceTest {
             return dto;
         });
         when(jwtTokenProvider.createAccessToken(any(User.class))).thenReturn("jwt-token");
-        when(jwtProperties.expirationMs()).thenReturn(3600_000L);
 
         var response = userService.register(req);
 
         assertNotNull(response);
-        assertEquals("Bearer", response.tokenType());
         assertEquals("jwt-token", response.accessToken());
         assertEquals(Role.BREEDER, response.user().getRole());
     }
@@ -101,7 +96,6 @@ class UserServiceTest {
             return dto;
         });
         when(jwtTokenProvider.createAccessToken(user)).thenReturn("jwt");
-        when(jwtProperties.expirationMs()).thenReturn(3600_000L);
 
         var response = userService.login(req);
 

@@ -27,11 +27,23 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+function clearSessionAndRedirectLogin() {
+  setStoredToken(null);
+  localStorage.removeItem('psr_user');
+  const path = window.location.pathname;
+  if (path !== '/login' && path !== '/register') {
+    window.location.assign('/login');
+  }
+}
+
 api.interceptors.response.use(
   (r) => r,
   (err) => {
-    if (err.response?.status === 401) {
-      setStoredToken(null);
+    const url = err.config?.url ?? '';
+    const isLoginOrRegister =
+      url.includes('/v1/auth/login') || url.includes('/v1/auth/register');
+    if (err.response?.status === 401 && !isLoginOrRegister) {
+      clearSessionAndRedirectLogin();
     }
     return Promise.reject(err);
   }
@@ -48,7 +60,5 @@ export type UserDto = {
 
 export type AuthResponse = {
   accessToken: string;
-  tokenType: string;
-  expiresInMs: number;
   user: UserDto;
 };

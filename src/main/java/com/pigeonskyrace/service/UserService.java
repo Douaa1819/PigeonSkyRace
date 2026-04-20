@@ -8,7 +8,6 @@ import com.pigeonskyrace.mapper.UserMapper;
 import com.pigeonskyrace.model.User;
 import com.pigeonskyrace.model.enums.Role;
 import com.pigeonskyrace.repository.UserRepository;
-import com.pigeonskyrace.security.JwtProperties;
 import com.pigeonskyrace.security.JwtTokenProvider;
 import com.pigeonskyrace.security.SecurityUtils;
 import org.springframework.http.HttpStatus;
@@ -24,20 +23,17 @@ public class UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
-    private final JwtProperties jwtProperties;
 
     public UserService(
             UserRepository userRepository,
             UserMapper userMapper,
             PasswordEncoder passwordEncoder,
-            JwtTokenProvider jwtTokenProvider,
-            JwtProperties jwtProperties
+            JwtTokenProvider jwtTokenProvider
     ) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
         this.jwtTokenProvider = jwtTokenProvider;
-        this.jwtProperties = jwtProperties;
     }
 
     public AuthResponseDTO register(RegisterRequestDTO request) {
@@ -72,6 +68,6 @@ public class UserService {
     private AuthResponseDTO buildAuthResponse(User user) {
         String token = jwtTokenProvider.createAccessToken(user);
         UserResponseDTO userDto = userMapper.toResponse(user);
-        return new AuthResponseDTO(token, "Bearer", jwtProperties.expirationMs(), userDto);
+        return new AuthResponseDTO(token, userDto);
     }
 }
