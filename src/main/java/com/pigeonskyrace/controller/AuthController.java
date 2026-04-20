@@ -57,7 +57,7 @@ public class AuthController {
 
     @GetMapping("/user/{id}")
     public ResponseEntity<UserResponseDTO> getUserById(@PathVariable String id, HttpSession session) {
-        if (session.getAttribute("user") == null) {
+        if (session.getAttribute("userId") == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
         try {

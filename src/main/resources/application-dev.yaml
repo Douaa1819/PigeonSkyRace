@@ -1,0 +1,4 @@
+# Activate with: spring.profiles.active=dev
+logging:
+  level:
+    com.pigeonskyrace: DEBUG
