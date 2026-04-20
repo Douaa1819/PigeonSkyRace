@@ -25,7 +25,7 @@ public class CompetionController {
 
     private final CompetionMapper competionMapper;
     private final CompetionService competionService;
-    private  final SaisonService  saisonService;
+    private final SaisonService saisonService;
 
     @PostMapping("")
     public ResponseEntity<CompetionResponseDTO> createCompetion(@RequestBody @Valid CompetionRequestDTO competionRequestDTO) {
