@@ -12,7 +12,7 @@ public record CorsProperties(String allowedOrigins) {
 
     public List<String> origins() {
         if (allowedOrigins == null || allowedOrigins.isBlank()) {
-            return List.of("http://localhost:5173", "http://localhost:3000");
+            return List.of("http://localhost:*", "http://127.0.0.1:*");
         }
         return Arrays.stream(allowedOrigins.split(","))
                 .map(String::trim)
