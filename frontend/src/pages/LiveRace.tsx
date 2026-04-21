@@ -1,17 +1,16 @@
 import { useEffect, useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import type { CompetitionDto, ResultatDto } from '@/api/types';
+import type { CompetitionDto } from '@/api/types';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { SectionTitle } from '@/components/ui/SectionTitle';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { LeaderboardTable } from '@/components/ranking/LeaderboardTable';
-import { useApiGet, usePollingApiGet } from '@/hooks/useApiGet';
+import { useApiGet } from '@/hooks/useApiGet';
+import { useLiveCompetitionLeaderboard } from '@/hooks/useLiveCompetitionLeaderboard';
 import { useRankMovement } from '@/hooks/useRankMovement';
 import { competitionIsLive } from '@/utils/competitionLive';
 import { resultatsToLeaderboardRows } from '@/utils/leaderboardRows';
 import './live-race.css';
-
-const POLL_MS = 4000;
 
 export function LiveRace() {
   const [params, setParams] = useSearchParams();
@@ -28,11 +27,8 @@ export function LiveRace() {
   const active = useMemo(() => competitions?.find((x) => x.id === cParam), [competitions, cParam]);
   const isWindowLive = competitionIsLive(active);
 
-  const { data: rawResults, loading: loadingRes, error: errRes } = usePollingApiGet<ResultatDto[]>(
-    `/v1/resultats/${encodeURIComponent(cParam)}`,
-    POLL_MS,
-    !!cParam
-  );
+  const { data: rawResults, loading: loadingRes, error: errRes, transport } =
+    useLiveCompetitionLeaderboard(cParam || null);
 
   const rows = useMemo(() => resultatsToLeaderboardRows(rawResults ?? []), [rawResults]);
 
@@ -85,7 +81,8 @@ export function LiveRace() {
             </select>
           )}
           <p className="results-toolbar__meta muted" style={{ margin: 0 }}>
-            Polling · {POLL_MS / 1000}s · {isWindowLive ? 'Inside scheduled race window' : 'Outside race window'}
+            {transport === 'websocket' ? 'WebSocket live stream' : 'Fallback polling'} ·{' '}
+            {isWindowLive ? 'Inside scheduled race window' : 'Outside race window'}
           </p>
         </div>
       </GlassCard>
