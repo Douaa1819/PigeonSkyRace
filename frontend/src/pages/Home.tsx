@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { useLocale } from '@/context/LocaleContext';
+import { heroImageForId } from '@/components/pigeon/pigeonImagery';
 
 const fade = {
   initial: { opacity: 0, y: 12 },
@@ -29,6 +30,20 @@ export function Home() {
           </Link>
         </div>
       </motion.section>
+
+      <section className="home-fly-grid">
+        {[heroImageForId('fly-a'), heroImageForId('fly-b'), heroImageForId('fly-c')].map((img, idx) => (
+          <motion.div
+            key={img}
+            className="home-fly-grid__item"
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.38, delay: idx * 0.07 }}
+          >
+            <img src={img} alt="" loading="lazy" />
+          </motion.div>
+        ))}
+      </section>
 
       <motion.section className="home-features" initial="hidden" animate="show" variants={{ hidden: {}, show: { transition: { staggerChildren: 0.06 } } }}>
         {[
@@ -89,19 +104,8 @@ export function Home() {
         <GlassCard className="home-preview" hoverLift={false}>
           <h3>{t('home.trust.title')}</h3>
           <p className="muted">{t('home.trust.subtitle')}</p>
-          <div className="home-preview__kpis">
-            <div>
-              <strong>{t('home.kpi.realtime')}</strong>
-              <span>{t('home.kpi.realtimeDesc')}</span>
-            </div>
-            <div>
-              <strong>{t('home.kpi.roles')}</strong>
-              <span>{t('home.kpi.rolesDesc')}</span>
-            </div>
-            <div>
-              <strong>{t('home.kpi.analytics')}</strong>
-              <span>{t('home.kpi.analyticsDesc')}</span>
-            </div>
+          <div className="home-preview__image">
+            <img src={heroImageForId('competition-visual')} alt="" loading="lazy" />
           </div>
         </GlassCard>
       </section>

@@ -1,4 +1,7 @@
 @import './theme/design-tokens.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --bg: transparent;
@@ -45,6 +48,7 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  transition: color 0.28s ease, background 0.28s ease;
 }
 
 a {
@@ -101,6 +105,9 @@ button {
 }
 
 .nav-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
   font-weight: 800;
   font-size: 1.05rem;
   letter-spacing: -0.03em;
@@ -141,6 +148,20 @@ button {
 
 .nav-mobile-toggle {
   display: none;
+}
+
+.nav-lang {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--muted);
+}
+
+.nav-lang__select {
+  min-width: 7.2rem;
+  height: 2.1rem;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.84rem;
 }
 
 .btn {
@@ -331,6 +352,33 @@ button {
   grid-template-columns: 1fr;
 }
 
+.home-fly-grid {
+  display: grid;
+  gap: 0.9rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 860px) {
+  .home-fly-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.home-fly-grid__item {
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  box-shadow: var(--card-lift);
+}
+
+.home-fly-grid__item img {
+  width: 100%;
+  display: block;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  transform: scale(1.01);
+}
+
 @media (min-width: 720px) {
   .home-features {
     grid-template-columns: repeat(3, 1fr);
@@ -440,6 +488,20 @@ button {
   padding: 0.25rem 0 1rem;
   text-align: center;
   font-size: 0.82rem;
+}
+
+.home-preview__image {
+  margin-top: 0.85rem;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.home-preview__image img {
+  width: 100%;
+  display: block;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
 }
 
 .input:focus {

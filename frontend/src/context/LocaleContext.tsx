@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useState, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import type { Locale } from '@/i18n/translations';
 import { translations } from '@/i18n/translations';
 
@@ -15,7 +15,8 @@ const LocaleContext = createContext<LocaleContextValue | null>(null);
 export function LocaleProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleRaw] = useState<Locale>(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
-    return saved === 'fr' ? 'fr' : 'en';
+    if (saved === 'en' || saved === 'ar' || saved === 'fr') return saved;
+    return 'fr';
   });
 
   const setLocale = (next: Locale) => {
@@ -23,7 +24,22 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(STORAGE_KEY, next);
   };
 
-  const toggleLocale = () => setLocale(locale === 'en' ? 'fr' : 'en');
+  const toggleLocale = () => {
+    if (locale === 'fr') {
+      setLocale('en');
+      return;
+    }
+    if (locale === 'en') {
+      setLocale('ar');
+      return;
+    }
+    setLocale('fr');
+  };
+
+  useEffect(() => {
+    document.documentElement.lang = locale;
+    document.documentElement.dir = locale === 'ar' ? 'rtl' : 'ltr';
+  }, [locale]);
 
   const value = useMemo(
     () => ({

@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
+import { Bird, Globe2, MoonStar, SunMedium } from 'lucide-react';
 import { FloatingOrbs } from '@/components/ambient/FloatingOrbs';
 import { SkyBackground } from '@/components/ambient/SkyBackground';
 import { useAuth } from '@/context/AuthContext';
@@ -10,7 +11,7 @@ import { useTheme } from '@/context/ThemeContext';
 export function Layout() {
   const { user, logout } = useAuth();
   const { theme, toggle } = useTheme();
-  const { locale, toggleLocale, t } = useLocale();
+  const { locale, setLocale, t } = useLocale();
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -24,7 +25,8 @@ export function Layout() {
       <FloatingOrbs />
       <header className="nav">
         <Link to="/" className="nav-brand">
-          PigeonSkyRace
+          <Bird size={17} />
+          <span>PigeonSkyRace</span>
         </Link>
         <button
           type="button"
@@ -61,10 +63,21 @@ export function Layout() {
               </NavLink>
             </>
           )}
-          <button type="button" className="btn btn-ghost" onClick={toggleLocale} aria-label="Toggle language">
-            {locale === 'en' ? t('lang.fr') : t('lang.en')}
-          </button>
+          <label className="nav-lang">
+            <Globe2 size={15} />
+            <select
+              className="input nav-lang__select"
+              value={locale}
+              onChange={(e) => setLocale(e.target.value as 'fr' | 'en' | 'ar')}
+              aria-label="Language"
+            >
+              <option value="fr">{t('lang.fr')}</option>
+              <option value="en">{t('lang.en')}</option>
+              <option value="ar">{t('lang.ar')}</option>
+            </select>
+          </label>
           <button type="button" className="btn btn-ghost" onClick={toggle} aria-label="Toggle theme">
+            {theme === 'dark' ? <SunMedium size={15} /> : <MoonStar size={15} />}
             {theme === 'dark' ? t('theme.light') : t('theme.dark')}
           </button>
           {user ? (
