@@ -9,61 +9,41 @@ const fade = {
 
 export function Home() {
   return (
-    <div className="home-hero stack" style={{ gap: '1.5rem' }}>
-      <motion.div {...fade} transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}>
-        <p
-          style={{
-            margin: 0,
-            fontSize: '0.8rem',
-            fontWeight: 700,
-            letterSpacing: '0.14em',
-            textTransform: 'uppercase',
-            color: 'var(--gold)',
-            textShadow: '0 0 20px var(--gold-soft)',
-          }}
-        >
-          Elite pigeon athletics
-        </p>
-        <h1 style={{ fontSize: 'clamp(2rem, 5vw, 2.75rem)', margin: '0.35rem 0', letterSpacing: '-0.03em' }}>
-          Race the sky. Lead the leaderboard.
-        </h1>
-        <p style={{ color: 'var(--muted)', margin: 0, maxWidth: '52ch', fontSize: '1.05rem' }}>
-          A premium sports platform for Moroccan pigeon racing — seasons, lofts, ringed athletes, and live
-          standings with motion, depth, and glass UI.
+    <div className="home stack" style={{ gap: '1.85rem' }}>
+      <motion.section className="home-hero" {...fade} transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}>
+        <span className="home-kicker">Professional Moroccan Federation Platform</span>
+        <h1 className="home-hero-title">Race the Sky. Broadcast Every Ranking Live.</h1>
+        <p className="home-hero-sub">
+          PigeonSkyRace is a production-ready SaaS platform for organizing Moroccan racing pigeon competitions:
+          breeders, organizers, race operations, live leaderboards, analytics, and official results in one secure
+          workspace.
         </p>
         <div className="home-hero__actions">
           <Link className="btn btn-primary" to="/login">
-            Sign in
+            Login
           </Link>
           <Link className="btn btn-ghost" to="/register">
-            Create breeder account
+            Register
+          </Link>
+          <Link className="btn btn-ghost" to="/live">
+            Live Rankings
           </Link>
         </div>
-      </motion.div>
+      </motion.section>
 
-      <motion.div
-        className="home-features"
-        initial="hidden"
-        animate="show"
-        variants={{
-          hidden: {},
-          show: {
-            transition: { staggerChildren: 0.08 },
-          },
-        }}
-      >
+      <motion.section className="home-features" initial="hidden" animate="show" variants={{ hidden: {}, show: { transition: { staggerChildren: 0.06 } } }}>
         {[
           {
-            t: 'Competition engine',
-            d: 'Organize seasons and races with federation-grade structure.',
+            t: 'Live race telemetry',
+            d: 'Stream ranking updates in realtime using resilient WebSocket and fallback polling transport.',
           },
           {
-            t: 'Athlete profiles',
-            d: 'Every pigeon is a competitor — ring ID, loft, speed, and points.',
+            t: 'Competition operations',
+            d: 'Manage seasons, races, entries, and race status with organizer-grade dashboards.',
           },
           {
-            t: 'Live rankings',
-            d: 'Animated leaderboards with top-three spotlight and glass panels.',
+            t: 'Athlete intelligence',
+            d: 'Track each pigeon with profile cards, performance history, and analytics views.',
           },
         ].map((x) => (
           <motion.div key={x.t} variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } }}>
@@ -73,7 +53,63 @@ export function Home() {
             </GlassCard>
           </motion.div>
         ))}
-      </motion.div>
+      </motion.section>
+
+      <section className="home-grid home-grid--2">
+        <GlassCard className="home-section-card" hoverLift={false}>
+          <h3>How it works</h3>
+          <ol className="home-list">
+            <li>Organizers create competitions and race windows.</li>
+            <li>Breeders register pigeons and track participation.</li>
+            <li>Results are computed, ranked, and broadcast live.</li>
+          </ol>
+        </GlassCard>
+        <GlassCard className="home-section-card" hoverLift={false}>
+          <h3>Why teams choose it</h3>
+          <ul className="home-list">
+            <li>Live leaderboard visibility with premium UX.</li>
+            <li>Role-based routing for admins, organizers, and breeders.</li>
+            <li>Data-ready architecture for future AI prediction modules.</li>
+          </ul>
+        </GlassCard>
+      </section>
+
+      <section className="home-grid home-grid--2">
+        <GlassCard className="home-preview" hoverLift={false}>
+          <h3>Dashboard preview</h3>
+          <p className="muted">Organizer control, breeder athlete cards, and race broadcast view.</p>
+          <div className="home-preview__mock">
+            <div className="home-preview__bar" />
+            <div className="home-preview__body">
+              <span />
+              <span />
+              <span />
+            </div>
+          </div>
+        </GlassCard>
+        <GlassCard className="home-preview" hoverLift={false}>
+          <h3>Trusted competition flow</h3>
+          <p className="muted">Designed for consistency, clarity, and fair ranking transparency.</p>
+          <div className="home-preview__kpis">
+            <div>
+              <strong>Realtime</strong>
+              <span>WS + Fallback</span>
+            </div>
+            <div>
+              <strong>Role-safe</strong>
+              <span>JWT secured</span>
+            </div>
+            <div>
+              <strong>Analytics</strong>
+              <span>Performance history</span>
+            </div>
+          </div>
+        </GlassCard>
+      </section>
+
+      <footer className="home-footer muted">
+        PigeonSkyRace — professional SaaS for Moroccan racing pigeon competitions.
+      </footer>
     </div>
   );
 }
