@@ -126,3 +126,16 @@
   font-size: 0.85rem;
   font-weight: 600;
 }
+
+.pigeon-card__analytics {
+  display: inline-block;
+  margin-top: 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-decoration: none !important;
+}
+
+.pigeon-card__analytics:hover {
+  opacity: 0.9;
+}

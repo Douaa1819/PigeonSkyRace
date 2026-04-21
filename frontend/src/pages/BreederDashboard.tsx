@@ -70,6 +70,7 @@ export function BreederDashboard() {
               pigeon={{
                 id: p.id,
                 numeroBague: p.numeroBague,
+                imageUrl: p.imageUrl,
                 sexe: p.sexe,
                 age: p.age,
                 couleur: p.couleur,

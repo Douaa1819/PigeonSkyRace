@@ -26,6 +26,7 @@ export function Layout() {
               )}
               {user.role === 'BREEDER' && <Link to="/breeder">Breeder</Link>}
               <Link to="/competitions">Competitions</Link>
+              <Link to="/live">Live</Link>
               <Link to="/pigeons">Pigeons</Link>
               <Link to="/results">Rankings</Link>
             </>

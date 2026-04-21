@@ -19,6 +19,7 @@ export type PigeonDto = {
   age?: number | null;
   couleur?: string | null;
   colombierId?: string | null;
+  imageUrl?: string | null;
 };
 
 export type ColombierDto = {
@@ -37,6 +38,21 @@ export type ResultatDto = {
   distance?: number | null;
   vitesse?: number | null;
   points?: number | null;
+  rank?: number | null;
+  pigeonId?: string | null;
+  ringNumber?: string | null;
+  loftName?: string | null;
+  imageUrl?: string | null;
+};
+
+export type PigeonResultHistoryItemDto = {
+  competitionId: string;
+  competitionName: string;
+  dateArrivee?: string | null;
+  distance?: number | null;
+  vitesse?: number | null;
+  points?: number | null;
+  rank?: number | null;
 };
 
 export type SaisonDto = {

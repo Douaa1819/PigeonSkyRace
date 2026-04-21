@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { heroImageForId } from '@/components/pigeon/pigeonImagery';
 import './pigeon-card.css';
@@ -6,6 +7,7 @@ import './pigeon-card.css';
 export type PigeonCardModel = {
   id: string;
   numeroBague: string;
+  imageUrl?: string | null;
   sexe?: string | null;
   age?: number | null;
   couleur?: string | null;
@@ -24,7 +26,7 @@ type Props = {
 };
 
 export function PigeonCard({ pigeon, index = 0, idLabel = 'Ring' }: Props) {
-  const img = heroImageForId(pigeon.id);
+  const img = pigeon.imageUrl?.trim() ? pigeon.imageUrl : heroImageForId(pigeon.id);
   const rank = pigeon.rank;
   const top = rank === 1 || rank === 2 || rank === 3;
 
@@ -70,6 +72,9 @@ export function PigeonCard({ pigeon, index = 0, idLabel = 'Ring' }: Props) {
               </div>
             )}
           </div>
+          <Link className="pigeon-card__analytics" to={`/pigeons/${pigeon.id}/analytics`}>
+            Performance charts
+          </Link>
         </div>
       </GlassCard>
     </motion.div>

@@ -6,6 +6,8 @@ import { Competitions } from '@/pages/Competitions';
 import { Home } from '@/pages/Home';
 import { Login } from '@/pages/Login';
 import { OrganizerDashboard } from '@/pages/OrganizerDashboard';
+import { LiveRace } from '@/pages/LiveRace';
+import { PigeonAnalytics } from '@/pages/PigeonAnalytics';
 import { Pigeons } from '@/pages/Pigeons';
 import { Register } from '@/pages/Register';
 import { Results } from '@/pages/Results';
@@ -73,10 +75,26 @@ export function App() {
           }
         />
         <Route
+          path="/pigeons/:id/analytics"
+          element={
+            <RequireAuth>
+              <PigeonAnalytics />
+            </RequireAuth>
+          }
+        />
+        <Route
           path="/pigeons"
           element={
             <RequireAuth>
               <Pigeons />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/live"
+          element={
+            <RequireAuth>
+              <LiveRace />
             </RequireAuth>
           }
         />

@@ -1,14 +1,19 @@
 import { useEffect, useMemo } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import type { CompetitionDto, ResultatDto } from '@/api/types';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { SectionTitle } from '@/components/ui/SectionTitle';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { LeaderboardTable } from '@/components/ranking/LeaderboardTable';
-import { useApiGet } from '@/hooks/useApiGet';
+import { useApiGet, usePollingApiGet } from '@/hooks/useApiGet';
+import { useRankMovement } from '@/hooks/useRankMovement';
+import { competitionIsLive } from '@/utils/competitionLive';
 import { resultatsToLeaderboardRows } from '@/utils/leaderboardRows';
+import './live-race.css';
 
-export function Results() {
+const POLL_MS = 4000;
+
+export function LiveRace() {
   const [params, setParams] = useSearchParams();
   const cParam = params.get('c') ?? '';
 
@@ -20,39 +25,50 @@ export function Results() {
     setParams({ c: competitions[0].id }, { replace: true });
   }, [competitions, cParam, setParams]);
 
-  const { data: rawResults, loading: loadingRes, error: errRes } = useApiGet<ResultatDto[]>(
+  const active = useMemo(() => competitions?.find((x) => x.id === cParam), [competitions, cParam]);
+  const isWindowLive = competitionIsLive(active);
+
+  const { data: rawResults, loading: loadingRes, error: errRes } = usePollingApiGet<ResultatDto[]>(
     `/v1/resultats/${encodeURIComponent(cParam)}`,
+    POLL_MS,
     !!cParam
   );
 
-  const activeName = useMemo(
-    () => competitions?.find((x) => x.id === cParam)?.nom,
-    [competitions, cParam]
-  );
-
   const rows = useMemo(() => resultatsToLeaderboardRows(rawResults ?? []), [rawResults]);
+
+  const movementByKey = useRankMovement(
+    rows.map((r) => ({ pigeonId: r.pigeonId, id: r.id, rank: r.rank })),
+    cParam
+  );
 
   const loading = loadingComps || (cParam ? loadingRes : false);
   const error = errComps || errRes;
 
   return (
-    <div className="stack" style={{ gap: '1.5rem' }}>
-      <SectionTitle
-        eyebrow="Live standings"
-        title="Rankings & results"
-        subtitle="Points-ranked leaderboard with ring numbers, lofts, and athlete imagery from the API."
-      />
+    <div className="stack live-race" style={{ gap: '1.5rem' }}>
+      <div className="live-race__head">
+        <SectionTitle
+          eyebrow="Broadcast"
+          title="Live race view"
+          subtitle="Top 10 refresh every few seconds with rank movement hints. Full table stays on Rankings."
+        />
+        {isWindowLive && (
+          <span className="live-race__pulse" aria-live="polite">
+            <span className="live-race__dot" /> Live window
+          </span>
+        )}
+      </div>
 
       <GlassCard className="results-toolbar">
         <div className="results-toolbar__inner">
-          <label className="label" htmlFor="competition">
+          <label className="label" htmlFor="live-competition">
             Competition
           </label>
           {loadingComps ? (
             <Skeleton height={44} />
           ) : (
             <select
-              id="competition"
+              id="live-competition"
               className="input select-like"
               value={cParam}
               onChange={(e) => setParams(e.target.value ? { c: e.target.value } : {})}
@@ -68,7 +84,9 @@ export function Results() {
               )}
             </select>
           )}
-          {activeName && <p className="results-toolbar__meta muted">Selected: {activeName}</p>}
+          <p className="results-toolbar__meta muted" style={{ margin: 0 }}>
+            Polling · {POLL_MS / 1000}s · {isWindowLive ? 'Inside scheduled race window' : 'Outside race window'}
+          </p>
         </div>
       </GlassCard>
 
@@ -91,8 +109,13 @@ export function Results() {
               </p>
             </GlassCard>
           ) : (
-            <LeaderboardTable rows={rows} />
+            <LeaderboardTable rows={rows} liveMode maxRows={10} movementByKey={movementByKey} />
           )}
+          <p className="muted" style={{ margin: 0 }}>
+            <Link to={`/results?c=${encodeURIComponent(cParam)}`}>Open full leaderboard</Link>
+            {' · '}
+            <Link to="/competitions">All competitions</Link>
+          </p>
         </>
       )}
     </div>

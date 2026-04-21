@@ -9,7 +9,10 @@ type State<T> = {
   reload: () => void;
 };
 
-export function useApiGet<T>(path: string, enabled = true): State<T> {
+/**
+ * @param softRefetch After the first successful load, refetches do not show the full loading state (for polling).
+ */
+export function useApiGet<T>(path: string, enabled = true, softRefetch = false): State<T> {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -23,7 +26,8 @@ export function useApiGet<T>(path: string, enabled = true): State<T> {
       return;
     }
     let cancelled = false;
-    setLoading(true);
+    const showLoading = !(softRefetch && v > 0);
+    if (showLoading) setLoading(true);
     setError(null);
     (async () => {
       try {
@@ -43,7 +47,19 @@ export function useApiGet<T>(path: string, enabled = true): State<T> {
     return () => {
       cancelled = true;
     };
-  }, [path, enabled, v]);
+  }, [path, enabled, v, softRefetch]);
+
+  return { data, loading, error, reload };
+}
+
+export function usePollingApiGet<T>(path: string, intervalMs: number, enabled = true): State<T> {
+  const { data, loading, error, reload } = useApiGet<T>(path, enabled, true);
+
+  useEffect(() => {
+    if (!enabled || intervalMs <= 0) return;
+    const id = window.setInterval(() => reload(), intervalMs);
+    return () => window.clearInterval(id);
+  }, [enabled, intervalMs, reload, path]);
 
   return { data, loading, error, reload };
 }
