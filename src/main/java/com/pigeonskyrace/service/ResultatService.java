@@ -11,8 +11,10 @@ import com.pigeonskyrace.model.*;
 import com.pigeonskyrace.repository.ResultatRepository;
 import com.pigeonskyrace.utils.Coordinates;
 import lombok.RequiredArgsConstructor;
+import com.pigeonskyrace.event.CompetitionUpdatedEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +35,7 @@ public class ResultatService {
     private final CompetionMapper competionMapper;
     private final ResultatMapper mapper;
     private final ResultatResponseEnricher resultatResponseEnricher;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     /**
      * Crée un résultat pour un pigeon dans une compétition et calcule sa vitesse.
@@ -136,9 +139,11 @@ public class ResultatService {
             resultatRepository.save(resultat);
         }
 
-        return resultats.stream()
+        List<ResultatResponseDTO> leaderboard = resultats.stream()
                 .map(this::mapEnriched)
                 .toList();
+        applicationEventPublisher.publishEvent(new CompetitionUpdatedEvent(competitionDto.getId(), leaderboard));
+        return leaderboard;
     }
 
     private ResultatResponseDTO mapEnriched(Resultat resultat) {

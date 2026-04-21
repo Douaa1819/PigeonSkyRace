@@ -67,6 +67,7 @@ public class SecurityConfig {
                     if (swaggerUiEnabled) {
                         auth.requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll();
                     }
+                    auth.requestMatchers("/ws/**").permitAll();
                     auth.requestMatchers(HttpMethod.POST, "/api/v1/saisons").hasAnyRole("ADMIN", "ORGANIZER");
                     auth.requestMatchers(HttpMethod.POST, "/api/v1/competions").hasAnyRole("ADMIN", "ORGANIZER");
                     auth.requestMatchers(HttpMethod.POST, "/api/v1/resultats/**").hasAnyRole("ADMIN", "ORGANIZER");
