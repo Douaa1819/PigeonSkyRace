@@ -9,6 +9,9 @@ export default defineConfig({
   resolve: {
     alias: { '@': src },
   },
+  define: {
+    global: 'globalThis',
+  },
   server: {
     port: 5173,
     proxy: {
