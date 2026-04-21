@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public interface ColombierRepository extends MongoRepository<Colombier, ObjectId> {
     Optional<Colombier> findById(ObjectId id);
+    Optional<Colombier> findByNomColombier(String nomColombier);
 
     List<Colombier> findByUser_Id(ObjectId userId);
 }

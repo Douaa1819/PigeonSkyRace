@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { Layout } from '@/components/Layout';
 import { useAuth } from '@/context/AuthContext';
+import { AdminDashboard } from '@/pages/AdminDashboard';
 import { BreederDashboard } from '@/pages/BreederDashboard';
 import { Competitions } from '@/pages/Competitions';
 import { Home } from '@/pages/Home';
@@ -30,6 +31,15 @@ function RequireOrganizer({ children }: { children: ReactNode }) {
   return children;
 }
 
+function RequireAdmin({ children }: { children: ReactNode }) {
+  const { user } = useAuth();
+  if (!user) return <Navigate to="/login" replace />;
+  if (user.role !== 'ADMIN') {
+    return <Navigate to="/" replace />;
+  }
+  return children;
+}
+
 function RequireBreeder({ children }: { children: ReactNode }) {
   const { user } = useAuth();
   if (!user) return <Navigate to="/login" replace />;
@@ -46,6 +56,16 @@ export function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route
+          path="/admin"
+          element={
+            <RequireAuth>
+              <RequireAdmin>
+                <AdminDashboard />
+              </RequireAdmin>
+            </RequireAuth>
+          }
+        />
         <Route
           path="/organizer"
           element={

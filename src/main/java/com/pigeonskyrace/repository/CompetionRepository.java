@@ -10,4 +10,5 @@ import java.util.Optional;
 @Repository
 public interface CompetionRepository extends MongoRepository<Competion, ObjectId> {
     Optional<Competion> findById(ObjectId id);
+    Optional<Competion> findByNom(String nom);
 }

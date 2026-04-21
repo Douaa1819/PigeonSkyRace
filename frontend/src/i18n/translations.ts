@@ -5,6 +5,7 @@ type Dict = Record<string, string>;
 export const translations: Record<Locale, Dict> = {
   en: {
     'nav.organizer': 'Organizer',
+    'nav.admin': 'Admin',
     'nav.breeder': 'Breeder',
     'nav.competitions': 'Competitions',
     'nav.live': 'Live',
@@ -73,6 +74,7 @@ export const translations: Record<Locale, Dict> = {
   },
   fr: {
     'nav.organizer': 'Organisateur',
+    'nav.admin': 'Admin',
     'nav.breeder': 'Éleveur',
     'nav.competitions': 'Compétitions',
     'nav.live': 'Live',
@@ -144,6 +146,7 @@ export const translations: Record<Locale, Dict> = {
   },
   ar: {
     'nav.organizer': 'المنظم',
+    'nav.admin': 'الإدارة',
     'nav.breeder': 'المربي',
     'nav.competitions': 'المسابقات',
     'nav.live': 'مباشر',

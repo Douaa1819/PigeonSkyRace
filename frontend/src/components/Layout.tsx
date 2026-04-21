@@ -39,6 +39,11 @@ export function Layout() {
         <nav className={`nav-links ${menuOpen ? 'nav-links--open' : ''}`}>
           {user && (
             <>
+              {user.role === 'ADMIN' && (
+                <NavLink to="/admin" onClick={closeMenu}>
+                  {t('nav.admin')}
+                </NavLink>
+              )}
               {(user.role === 'ADMIN' || user.role === 'ORGANIZER') && (
                 <NavLink to="/organizer" onClick={closeMenu}>
                   {t('nav.organizer')}

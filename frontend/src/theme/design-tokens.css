@@ -1,27 +1,27 @@
-/* Premium sports / sky palette — day & night */
+/* Strict federation palette (requested system) */
 :root {
-  --sky-top: #0c4a6e;
-  --sky-mid: #0369a1;
-  --sky-bottom: #7dd3fc;
-  --gold: #d4af37;
-  --gold-soft: rgba(212, 175, 55, 0.35);
-  --glass-bg: rgba(255, 255, 255, 0.08);
-  --glass-border: rgba(255, 255, 255, 0.18);
-  --glass-highlight: rgba(255, 255, 255, 0.45);
-  --glow: 0 0 40px rgba(56, 189, 248, 0.15);
-  --card-lift: 0 20px 50px rgba(8, 47, 73, 0.35);
+  --sky-top: #0b1220;
+  --sky-mid: #111827;
+  --sky-bottom: #1f2937;
+  --gold: #facc15;
+  --gold-soft: rgba(250, 204, 21, 0.35);
+  --glass-bg: rgba(17, 24, 39, 0.82);
+  --glass-border: rgba(31, 41, 55, 0.95);
+  --glass-highlight: rgba(156, 163, 175, 0.14);
+  --glow: 0 0 40px rgba(37, 99, 235, 0.18);
+  --card-lift: 0 22px 48px rgba(11, 18, 32, 0.45);
   --font-display: 'DM Sans', system-ui, sans-serif;
 }
 
 [data-theme='light'] {
-  --sky-top: #e0f2fe;
-  --sky-mid: #bae6fd;
-  --sky-bottom: #f0f9ff;
-  --glass-bg: rgba(255, 255, 255, 0.55);
-  --glass-border: rgba(255, 255, 255, 0.7);
+  --sky-top: #f8fafc;
+  --sky-mid: #eef2ff;
+  --sky-bottom: #e2e8f0;
+  --glass-bg: rgba(255, 255, 255, 0.88);
+  --glass-border: rgba(209, 213, 219, 0.8);
   --glass-highlight: rgba(255, 255, 255, 0.95);
-  --glow: 0 0 50px rgba(14, 165, 233, 0.2);
-  --card-lift: 0 24px 48px rgba(12, 74, 110, 0.12);
+  --glow: 0 0 50px rgba(37, 99, 235, 0.18);
+  --card-lift: 0 24px 48px rgba(15, 23, 42, 0.1);
 }
 
 @media (prefers-reduced-motion: reduce) {
