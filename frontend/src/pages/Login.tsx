@@ -1,9 +1,17 @@
 import { motion } from 'framer-motion';
+import { isAxiosError } from 'axios';
 import { FormEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { useAuth } from '@/context/AuthContext';
 import { useLocale } from '@/context/LocaleContext';
+
+function routeForRole(role: string) {
+  if (role === 'ADMIN') return '/admin';
+  if (role === 'ORGANIZER') return '/organizer';
+  if (role === 'BREEDER') return '/breeder';
+  return '/competitions';
+}
 
 export function Login() {
   const { login } = useAuth();
@@ -19,10 +27,14 @@ export function Login() {
     setError(null);
     setLoading(true);
     try {
-      await login(email, password);
-      navigate('/competitions', { replace: true });
-    } catch {
-      setError('Invalid email or password.');
+      const currentUser = await login(email, password);
+      navigate(routeForRole(currentUser.role), { replace: true });
+    } catch (err) {
+      if (isAxiosError<{ message?: string }>(err)) {
+        setError(err.response?.data?.message ?? 'Invalid email or password.');
+      } else {
+        setError('Invalid email or password.');
+      }
     } finally {
       setLoading(false);
     }

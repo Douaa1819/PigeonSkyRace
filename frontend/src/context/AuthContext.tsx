@@ -11,8 +11,8 @@ import { api, getStoredToken, setStoredToken, type UserDto } from '@/api/client'
 type AuthContextValue = {
   user: UserDto | null;
   token: string | null;
-  login: (email: string, password: string) => Promise<void>;
-  register: (name: string, email: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<UserDto>;
+  register: (name: string, email: string, password: string) => Promise<UserDto>;
   logout: () => void;
 };
 
@@ -47,6 +47,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setToken(data.accessToken);
     setUser(data.user);
     writeUser(data.user);
+    return data.user;
   }, []);
 
   const register = useCallback(async (name: string, email: string, password: string) => {
@@ -59,6 +60,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setToken(data.accessToken);
     setUser(data.user);
     writeUser(data.user);
+    return data.user;
   }, []);
 
   const logout = useCallback(() => {

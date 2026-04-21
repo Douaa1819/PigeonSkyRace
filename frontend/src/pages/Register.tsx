@@ -1,9 +1,17 @@
 import { motion } from 'framer-motion';
+import { isAxiosError } from 'axios';
 import { FormEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { useAuth } from '@/context/AuthContext';
 import { useLocale } from '@/context/LocaleContext';
+
+function routeForRole(role: string) {
+  if (role === 'ADMIN') return '/admin';
+  if (role === 'ORGANIZER') return '/organizer';
+  if (role === 'BREEDER') return '/breeder';
+  return '/competitions';
+}
 
 export function Register() {
   const { register } = useAuth();
@@ -20,10 +28,14 @@ export function Register() {
     setError(null);
     setLoading(true);
     try {
-      await register(name, email, password);
-      navigate('/competitions', { replace: true });
-    } catch {
-      setError('Could not register. Email may already be in use.');
+      const currentUser = await register(name, email, password);
+      navigate(routeForRole(currentUser.role), { replace: true });
+    } catch (err) {
+      if (isAxiosError<{ message?: string }>(err)) {
+        setError(err.response?.data?.message ?? 'Could not register. Email may already be in use.');
+      } else {
+        setError('Could not register. Email may already be in use.');
+      }
     } finally {
       setLoading(false);
     }
