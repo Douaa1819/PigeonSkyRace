@@ -6,6 +6,13 @@
   gap: 1rem;
 }
 
+.live-race__badge-row {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
 .live-race__pulse {
   display: inline-flex;
   align-items: center;
@@ -25,6 +32,47 @@
 [data-theme='light'] .live-race__pulse {
   color: #166534;
   background: rgba(74, 222, 128, 0.2);
+}
+
+.live-race__status {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.42rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border: 1px solid transparent;
+}
+
+.live-race__status--ok {
+  color: #86efac;
+  border-color: rgba(74, 222, 128, 0.35);
+  background: rgba(74, 222, 128, 0.1);
+}
+
+.live-race__status--warn {
+  color: #fde68a;
+  border-color: rgba(251, 191, 36, 0.35);
+  background: rgba(251, 191, 36, 0.12);
+}
+
+.live-race__status--polling {
+  color: #cbd5e1;
+  border-color: rgba(148, 163, 184, 0.35);
+  background: rgba(148, 163, 184, 0.12);
+}
+
+[data-theme='light'] .live-race__status--ok {
+  color: #166534;
+}
+
+[data-theme='light'] .live-race__status--warn {
+  color: #854d0e;
+}
+
+[data-theme='light'] .live-race__status--polling {
+  color: #334155;
 }
 
 .live-race__dot {
@@ -59,4 +107,63 @@
     transform: scale(1);
     box-shadow: 0 0 0 0 rgba(74, 222, 128, 0);
   }
+}
+
+.live-race__demo-btn {
+  margin-top: 0.2rem;
+  width: fit-content;
+}
+
+.live-race__podium {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.9rem;
+}
+
+@media (min-width: 720px) {
+  .live-race__podium {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.live-race__podium-card {
+  padding: 1rem 1.05rem !important;
+}
+
+.live-race__podium-rank {
+  margin: 0;
+  font-size: 1.45rem;
+  font-weight: 900;
+}
+
+.live-race__podium-name {
+  margin: 0.2rem 0 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.live-race__podium-meta {
+  margin: 0.25rem 0 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.live-race__podium-card--1 {
+  box-shadow: 0 0 28px rgba(251, 191, 36, 0.28);
+}
+
+.live-race__podium-card--1 .live-race__podium-rank {
+  color: #fbbf24;
+}
+
+.live-race__podium-card--2 .live-race__podium-rank {
+  color: #e2e8f0;
+}
+
+.live-race__podium-card--3 .live-race__podium-rank {
+  color: #fb923c;
+}
+
+.live-race__loading {
+  max-width: 1020px;
 }

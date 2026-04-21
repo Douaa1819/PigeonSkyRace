@@ -51,6 +51,32 @@
   background: linear-gradient(90deg, rgba(212, 175, 55, 0.08), transparent 55%);
 }
 
+.leaderboard-table__row--move-up td {
+  animation: row-flash-up 0.65s ease-out;
+}
+
+.leaderboard-table__row--move-down td {
+  animation: row-flash-down 0.65s ease-out;
+}
+
+@keyframes row-flash-up {
+  0% {
+    background-color: rgba(74, 222, 128, 0.22);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+@keyframes row-flash-down {
+  0% {
+    background-color: rgba(248, 113, 113, 0.18);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
 .leaderboard-table__rank {
   display: inline-flex;
   align-items: center;

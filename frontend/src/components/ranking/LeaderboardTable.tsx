@@ -49,6 +49,12 @@ function rowKey(r: LeaderboardRow) {
   return r.pigeonId || r.id;
 }
 
+function movementRowClass(m: RankMovement | undefined) {
+  if (m === 'up') return 'leaderboard-table__row--move-up';
+  if (m === 'down') return 'leaderboard-table__row--move-down';
+  return '';
+}
+
 function MovementIcon({ m }: { m: RankMovement | undefined }) {
   if (!m || m === 'same') return <span className="leaderboard-table__delta leaderboard-table__delta--same">—</span>;
   if (m === 'new') return <span className="leaderboard-table__delta leaderboard-table__delta--new">●</span>;
@@ -86,7 +92,9 @@ export function LeaderboardTable({ rows, liveMode = false, movementByKey, maxRow
                 initial={false}
                 animate={{ opacity: 1 }}
                 transition={{ type: 'spring', stiffness: 420, damping: 32 }}
-                className={r.rank <= 3 ? 'leaderboard-table__row--spotlight' : undefined}
+                className={`${r.rank <= 3 ? 'leaderboard-table__row--spotlight' : ''} ${movementRowClass(
+                  movementByKey?.[key]
+                )}`.trim()}
               >
                 <td>
                   <span className={`leaderboard-table__rank ${rankClass(r.rank)}`}>#{r.rank}</span>

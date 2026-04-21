@@ -1,20 +1,62 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import type { CompetitionDto } from '@/api/types';
+import type { LeaderboardRow } from '@/components/ranking/LeaderboardTable';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { SectionTitle } from '@/components/ui/SectionTitle';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { LeaderboardTable } from '@/components/ranking/LeaderboardTable';
 import { useApiGet } from '@/hooks/useApiGet';
-import { useLiveCompetitionLeaderboard } from '@/hooks/useLiveCompetitionLeaderboard';
+import {
+  useLiveCompetitionLeaderboard,
+  type LiveConnectionStatus,
+} from '@/hooks/useLiveCompetitionLeaderboard';
 import { useRankMovement } from '@/hooks/useRankMovement';
 import { competitionIsLive } from '@/utils/competitionLive';
 import { resultatsToLeaderboardRows } from '@/utils/leaderboardRows';
 import './live-race.css';
 
+const DEV_DEMO_INTERVAL = 3200;
+
+function statusLabel(status: LiveConnectionStatus) {
+  if (status === 'websocket-connected') return 'WebSocket Connected';
+  if (status === 'websocket-reconnecting') return 'Reconnecting';
+  if (status === 'polling') return 'Fallback Polling';
+  return 'Connecting';
+}
+
+function statusClass(status: LiveConnectionStatus) {
+  if (status === 'websocket-connected') return 'live-race__status--ok';
+  if (status === 'websocket-reconnecting' || status === 'websocket-connecting') return 'live-race__status--warn';
+  return 'live-race__status--polling';
+}
+
+function simulateRows(prev: LeaderboardRow[]): LeaderboardRow[] {
+  if (prev.length < 2) return prev;
+  const next = [...prev];
+  const limit = Math.min(7, next.length - 1);
+  const i = Math.max(0, Math.floor(Math.random() * limit));
+  [next[i], next[i + 1]] = [next[i + 1], next[i]];
+
+  return next.map((row, index) => {
+    const rank = index + 1;
+    const speedBase = row.speed ?? Math.max(80, 150 - rank * 2.4);
+    const pointsBase = row.points ?? Math.max(10, 100 - rank * 3.25);
+    return {
+      ...row,
+      rank,
+      speed: Math.max(1, speedBase + (Math.random() * 1.7 - 0.7)),
+      points: Math.max(1, pointsBase + (Math.random() * 1.4 - 0.6)),
+    };
+  });
+}
+
 export function LiveRace() {
   const [params, setParams] = useSearchParams();
   const cParam = params.get('c') ?? '';
+  const isDev = import.meta.env.DEV;
+  const [demoMode, setDemoMode] = useState(isDev);
+  const [demoRows, setDemoRows] = useState<LeaderboardRow[]>([]);
 
   const { data: competitions, loading: loadingComps, error: errComps } =
     useApiGet<CompetitionDto[]>('/v1/competions');
@@ -27,14 +69,28 @@ export function LiveRace() {
   const active = useMemo(() => competitions?.find((x) => x.id === cParam), [competitions, cParam]);
   const isWindowLive = competitionIsLive(active);
 
-  const { data: rawResults, loading: loadingRes, error: errRes, transport } =
+  const { data: rawResults, loading: loadingRes, error: errRes, transport, connectionStatus } =
     useLiveCompetitionLeaderboard(cParam || null);
 
   const rows = useMemo(() => resultatsToLeaderboardRows(rawResults ?? []), [rawResults]);
+  const displayRows = demoMode ? demoRows : rows;
+  const podium = displayRows.slice(0, 3);
+
+  useEffect(() => {
+    setDemoRows(rows);
+  }, [rows, cParam]);
+
+  useEffect(() => {
+    if (!isDev || !demoMode || rows.length < 2) return;
+    const id = window.setInterval(() => {
+      setDemoRows((curr) => simulateRows(curr.length ? curr : rows));
+    }, DEV_DEMO_INTERVAL);
+    return () => window.clearInterval(id);
+  }, [demoMode, isDev, rows]);
 
   const movementByKey = useRankMovement(
-    rows.map((r) => ({ pigeonId: r.pigeonId, id: r.id, rank: r.rank })),
-    cParam
+    displayRows.map((r) => ({ pigeonId: r.pigeonId, id: r.id, rank: r.rank })),
+    `${cParam}-${demoMode ? 'demo' : 'live'}`
   );
 
   const loading = loadingComps || (cParam ? loadingRes : false);
@@ -46,13 +102,17 @@ export function LiveRace() {
         <SectionTitle
           eyebrow="Broadcast"
           title="Live race view"
-          subtitle="Top 10 refresh every few seconds with rank movement hints. Full table stays on Rankings."
+          subtitle="Premium realtime leaderboard with animated rank movement, podium spotlight, and resilient transport fallback."
         />
-        {isWindowLive && (
+        <div className="live-race__badge-row">
           <span className="live-race__pulse" aria-live="polite">
-            <span className="live-race__dot" /> Live window
+            <span className="live-race__dot" />
+            {isWindowLive ? 'LIVE / ONLINE' : 'ONLINE'}
           </span>
-        )}
+          <span className={`live-race__status ${statusClass(connectionStatus)}`}>
+            {statusLabel(connectionStatus)}
+          </span>
+        </div>
       </div>
 
       <GlassCard className="results-toolbar">
@@ -84,13 +144,23 @@ export function LiveRace() {
             {transport === 'websocket' ? 'WebSocket live stream' : 'Fallback polling'} ·{' '}
             {isWindowLive ? 'Inside scheduled race window' : 'Outside race window'}
           </p>
+          {isDev && (
+            <button
+              type="button"
+              className="btn btn-ghost live-race__demo-btn"
+              onClick={() => setDemoMode((x) => !x)}
+            >
+              {demoMode ? 'Disable DEV demo' : 'Enable DEV demo'}
+            </button>
+          )}
         </div>
       </GlassCard>
 
       {error && <div className="error-banner">{error}</div>}
 
       {loading && (
-        <div className="stack" style={{ gap: '0.65rem' }}>
+        <div className="stack live-race__loading" style={{ gap: '0.65rem' }}>
+          <Skeleton height={118} />
           <Skeleton height={48} />
           <Skeleton height={48} />
           <Skeleton height={48} />
@@ -99,14 +169,25 @@ export function LiveRace() {
 
       {!loading && !error && cParam && rawResults && (
         <>
-          {rows.length === 0 ? (
+          {displayRows.length === 0 ? (
             <GlassCard style={{ padding: '1.5rem' }}>
               <p className="muted" style={{ margin: 0 }}>
                 No results for this competition yet.
               </p>
             </GlassCard>
           ) : (
-            <LeaderboardTable rows={rows} liveMode maxRows={10} movementByKey={movementByKey} />
+            <>
+              <div className="live-race__podium">
+                {podium.map((r) => (
+                  <GlassCard key={r.id} className={`live-race__podium-card live-race__podium-card--${r.rank}`}>
+                    <p className="live-race__podium-rank">#{r.rank}</p>
+                    <p className="live-race__podium-name">{r.title}</p>
+                    <p className="live-race__podium-meta">{r.subtitle || 'Elite competitor'}</p>
+                  </GlassCard>
+                ))}
+              </div>
+              <LeaderboardTable rows={displayRows} liveMode maxRows={10} movementByKey={movementByKey} />
+            </>
           )}
           <p className="muted" style={{ margin: 0 }}>
             <Link to={`/results?c=${encodeURIComponent(cParam)}`}>Open full leaderboard</Link>
