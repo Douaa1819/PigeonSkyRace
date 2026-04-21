@@ -3,9 +3,11 @@ import { FormEvent, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { useAuth } from '@/context/AuthContext';
+import { useLocale } from '@/context/LocaleContext';
 
 export function Register() {
   const { register } = useAuth();
+  const { t } = useLocale();
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -30,15 +32,12 @@ export function Register() {
   return (
     <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
       <GlassCard className="auth-shell" hoverLift={false}>
-        <h2>Create account</h2>
-        <p style={{ color: 'var(--muted)', marginTop: 0 }}>
-          New accounts are registered as <strong>breeders</strong>. Organizers and admins are assigned by the
-          federation.
-        </p>
+        <h2>{t('auth.register.title')}</h2>
+        <p style={{ color: 'var(--muted)', marginTop: 0 }}>{t('auth.register.subtitle')}</p>
         <form className="stack" onSubmit={onSubmit}>
           <div>
             <label className="label" htmlFor="name">
-              Name
+              {t('auth.name')}
             </label>
             <input
               id="name"
@@ -51,7 +50,7 @@ export function Register() {
           </div>
           <div>
             <label className="label" htmlFor="email">
-              Email
+              {t('auth.email')}
             </label>
             <input
               id="email"
@@ -65,7 +64,7 @@ export function Register() {
           </div>
           <div>
             <label className="label" htmlFor="password">
-              Password
+              {t('auth.password')}
             </label>
             <input
               id="password"
@@ -80,11 +79,11 @@ export function Register() {
           </div>
           {error && <p style={{ color: '#fecaca', margin: 0 }}>{error}</p>}
           <button className="btn btn-primary" type="submit" disabled={loading}>
-            {loading ? 'Creating…' : 'Register'}
+            {loading ? t('auth.register.loading') : t('auth.register.submit')}
           </button>
         </form>
         <p style={{ color: 'var(--muted)', marginBottom: 0 }}>
-          Already have an account? <Link to="/login">Sign in</Link>
+          {t('auth.register.hasAccount')} <Link to="/login">{t('nav.login')}</Link>
         </p>
       </GlassCard>
     </motion.div>

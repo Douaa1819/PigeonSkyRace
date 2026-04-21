@@ -4,11 +4,13 @@ import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { FloatingOrbs } from '@/components/ambient/FloatingOrbs';
 import { SkyBackground } from '@/components/ambient/SkyBackground';
 import { useAuth } from '@/context/AuthContext';
+import { useLocale } from '@/context/LocaleContext';
 import { useTheme } from '@/context/ThemeContext';
 
 export function Layout() {
   const { user, logout } = useAuth();
   const { theme, toggle } = useTheme();
+  const { locale, toggleLocale, t } = useLocale();
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -30,37 +32,40 @@ export function Layout() {
           aria-label="Toggle navigation"
           onClick={() => setMenuOpen((x) => !x)}
         >
-          {menuOpen ? 'Close' : 'Menu'}
+          {menuOpen ? t('nav.close') : t('nav.menu')}
         </button>
         <nav className={`nav-links ${menuOpen ? 'nav-links--open' : ''}`}>
           {user && (
             <>
               {(user.role === 'ADMIN' || user.role === 'ORGANIZER') && (
                 <NavLink to="/organizer" onClick={closeMenu}>
-                  Organizer
+                  {t('nav.organizer')}
                 </NavLink>
               )}
               {user.role === 'BREEDER' && (
                 <NavLink to="/breeder" onClick={closeMenu}>
-                  Breeder
+                  {t('nav.breeder')}
                 </NavLink>
               )}
               <NavLink to="/competitions" onClick={closeMenu}>
-                Competitions
+                {t('nav.competitions')}
               </NavLink>
               <NavLink to="/live" onClick={closeMenu}>
-                Live
+                {t('nav.live')}
               </NavLink>
               <NavLink to="/pigeons" onClick={closeMenu}>
-                Pigeons
+                {t('nav.pigeons')}
               </NavLink>
               <NavLink to="/results" onClick={closeMenu}>
-                Rankings
+                {t('nav.rankings')}
               </NavLink>
             </>
           )}
+          <button type="button" className="btn btn-ghost" onClick={toggleLocale} aria-label="Toggle language">
+            {locale === 'en' ? t('lang.fr') : t('lang.en')}
+          </button>
           <button type="button" className="btn btn-ghost" onClick={toggle} aria-label="Toggle theme">
-            {theme === 'dark' ? 'Light' : 'Dark'}
+            {theme === 'dark' ? t('theme.light') : t('theme.dark')}
           </button>
           {user ? (
             <button
@@ -71,15 +76,15 @@ export function Layout() {
                 logout();
               }}
             >
-              Sign out
+              {t('nav.signOut')}
             </button>
           ) : (
             <>
               <NavLink to="/login" onClick={closeMenu}>
-                Login
+                {t('nav.login')}
               </NavLink>
               <NavLink to="/register" onClick={closeMenu}>
-                Register
+                {t('nav.register')}
               </NavLink>
             </>
           )}

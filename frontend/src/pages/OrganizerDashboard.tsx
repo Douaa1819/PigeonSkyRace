@@ -4,10 +4,12 @@ import { GlassCard } from '@/components/ui/GlassCard';
 import { SectionTitle } from '@/components/ui/SectionTitle';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { useAuth } from '@/context/AuthContext';
+import { useLocale } from '@/context/LocaleContext';
 import { useApiGet } from '@/hooks/useApiGet';
 
 export function OrganizerDashboard() {
   const { user } = useAuth();
+  const { t } = useLocale();
   const saisons = useApiGet<SaisonDto[]>('/v1/saisons');
   const comps = useApiGet<CompetitionDto[]>('/v1/competions');
 
@@ -17,8 +19,8 @@ export function OrganizerDashboard() {
   return (
     <div className="stack" style={{ gap: '1.5rem' }}>
       <SectionTitle
-        eyebrow="Control center"
-        title="Organizer dashboard"
+        eyebrow={t('dashboard.organizer.eyebrow')}
+        title={t('dashboard.organizer.title')}
         subtitle={
           <>
             Signed in as <strong>{user?.email}</strong> ({user?.role}). Manage seasons, races, and published

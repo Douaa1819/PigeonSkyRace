@@ -6,10 +6,12 @@ import { GlassCard } from '@/components/ui/GlassCard';
 import { SectionTitle } from '@/components/ui/SectionTitle';
 import { SkeletonCard } from '@/components/ui/Skeleton';
 import { useAuth } from '@/context/AuthContext';
+import { useLocale } from '@/context/LocaleContext';
 import { useApiGet } from '@/hooks/useApiGet';
 
 export function BreederDashboard() {
   const { user } = useAuth();
+  const { t } = useLocale();
   const { data, loading, error } = useApiGet<ColombierDto[]>('/v1/colombiers');
 
   const flat = useMemo(() => {
@@ -25,7 +27,7 @@ export function BreederDashboard() {
   return (
     <div className="stack" style={{ gap: '1.5rem' }}>
       <SectionTitle
-        eyebrow="Breeder HQ"
+        eyebrow={t('dashboard.breeder.title')}
         title={`Welcome, ${user?.name ?? 'Champion'}`}
         subtitle="Your lofts and racing athletes — performance and entries in one premium workspace."
       />
@@ -51,7 +53,7 @@ export function BreederDashboard() {
         </GlassCard>
       </div>
 
-      <h2 style={{ margin: '0.25rem 0 0', fontSize: '1.15rem' }}>Your athletes</h2>
+      <h2 style={{ margin: '0.25rem 0 0', fontSize: '1.15rem' }}>{t('dashboard.breeder.athletes')}</h2>
 
       {loading && (
         <div className="premium-grid premium-grid--3">

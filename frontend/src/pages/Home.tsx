@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { GlassCard } from '@/components/ui/GlassCard';
+import { useLocale } from '@/context/LocaleContext';
 
 const fade = {
   initial: { opacity: 0, y: 12 },
@@ -8,25 +9,23 @@ const fade = {
 };
 
 export function Home() {
+  const { t } = useLocale();
+
   return (
     <div className="home stack" style={{ gap: '1.85rem' }}>
       <motion.section className="home-hero" {...fade} transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}>
-        <span className="home-kicker">Professional Moroccan Federation Platform</span>
-        <h1 className="home-hero-title">Race the Sky. Broadcast Every Ranking Live.</h1>
-        <p className="home-hero-sub">
-          PigeonSkyRace is a production-ready SaaS platform for organizing Moroccan racing pigeon competitions:
-          breeders, organizers, race operations, live leaderboards, analytics, and official results in one secure
-          workspace.
-        </p>
+        <span className="home-kicker">{t('home.kicker')}</span>
+        <h1 className="home-hero-title">{t('home.title')}</h1>
+        <p className="home-hero-sub">{t('home.subtitle')}</p>
         <div className="home-hero__actions">
           <Link className="btn btn-primary" to="/login">
-            Login
+            {t('home.cta.login')}
           </Link>
           <Link className="btn btn-ghost" to="/register">
-            Register
+            {t('home.cta.register')}
           </Link>
           <Link className="btn btn-ghost" to="/live">
-            Live Rankings
+            {t('home.cta.live')}
           </Link>
         </div>
       </motion.section>
@@ -34,16 +33,16 @@ export function Home() {
       <motion.section className="home-features" initial="hidden" animate="show" variants={{ hidden: {}, show: { transition: { staggerChildren: 0.06 } } }}>
         {[
           {
-            t: 'Live race telemetry',
-            d: 'Stream ranking updates in realtime using resilient WebSocket and fallback polling transport.',
+            t: t('home.features.live.title'),
+            d: t('home.features.live.desc'),
           },
           {
-            t: 'Competition operations',
-            d: 'Manage seasons, races, entries, and race status with organizer-grade dashboards.',
+            t: t('home.features.ops.title'),
+            d: t('home.features.ops.desc'),
           },
           {
-            t: 'Athlete intelligence',
-            d: 'Track each pigeon with profile cards, performance history, and analytics views.',
+            t: t('home.features.athlete.title'),
+            d: t('home.features.athlete.desc'),
           },
         ].map((x) => (
           <motion.div key={x.t} variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } }}>
@@ -57,27 +56,27 @@ export function Home() {
 
       <section className="home-grid home-grid--2">
         <GlassCard className="home-section-card" hoverLift={false}>
-          <h3>How it works</h3>
+          <h3>{t('home.how.title')}</h3>
           <ol className="home-list">
-            <li>Organizers create competitions and race windows.</li>
-            <li>Breeders register pigeons and track participation.</li>
-            <li>Results are computed, ranked, and broadcast live.</li>
+            <li>{t('home.how.1')}</li>
+            <li>{t('home.how.2')}</li>
+            <li>{t('home.how.3')}</li>
           </ol>
         </GlassCard>
         <GlassCard className="home-section-card" hoverLift={false}>
-          <h3>Why teams choose it</h3>
+          <h3>{t('home.benefits.title')}</h3>
           <ul className="home-list">
-            <li>Live leaderboard visibility with premium UX.</li>
-            <li>Role-based routing for admins, organizers, and breeders.</li>
-            <li>Data-ready architecture for future AI prediction modules.</li>
+            <li>{t('home.benefits.1')}</li>
+            <li>{t('home.benefits.2')}</li>
+            <li>{t('home.benefits.3')}</li>
           </ul>
         </GlassCard>
       </section>
 
       <section className="home-grid home-grid--2">
         <GlassCard className="home-preview" hoverLift={false}>
-          <h3>Dashboard preview</h3>
-          <p className="muted">Organizer control, breeder athlete cards, and race broadcast view.</p>
+          <h3>{t('home.preview.title')}</h3>
+          <p className="muted">{t('home.preview.subtitle')}</p>
           <div className="home-preview__mock">
             <div className="home-preview__bar" />
             <div className="home-preview__body">
@@ -88,28 +87,26 @@ export function Home() {
           </div>
         </GlassCard>
         <GlassCard className="home-preview" hoverLift={false}>
-          <h3>Trusted competition flow</h3>
-          <p className="muted">Designed for consistency, clarity, and fair ranking transparency.</p>
+          <h3>{t('home.trust.title')}</h3>
+          <p className="muted">{t('home.trust.subtitle')}</p>
           <div className="home-preview__kpis">
             <div>
-              <strong>Realtime</strong>
-              <span>WS + Fallback</span>
+              <strong>{t('home.kpi.realtime')}</strong>
+              <span>{t('home.kpi.realtimeDesc')}</span>
             </div>
             <div>
-              <strong>Role-safe</strong>
-              <span>JWT secured</span>
+              <strong>{t('home.kpi.roles')}</strong>
+              <span>{t('home.kpi.rolesDesc')}</span>
             </div>
             <div>
-              <strong>Analytics</strong>
-              <span>Performance history</span>
+              <strong>{t('home.kpi.analytics')}</strong>
+              <span>{t('home.kpi.analyticsDesc')}</span>
             </div>
           </div>
         </GlassCard>
       </section>
 
-      <footer className="home-footer muted">
-        PigeonSkyRace — professional SaaS for Moroccan racing pigeon competitions.
-      </footer>
+      <footer className="home-footer muted">{t('home.footer')}</footer>
     </div>
   );
 }
