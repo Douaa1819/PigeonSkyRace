@@ -13,6 +13,7 @@ public class PigeonResponseDTO {
     private Integer age;
     private String couleur;
     private String colombierId;
+    private String imageUrl;
 
     public PigeonResponseDTO(String id, String numeroBague, Sexe sexe, Integer age, String couleur) {
         this.id = id;

@@ -1,11 +1,11 @@
 package com.pigeonskyrace.controller;
 
 import com.pigeonskyrace.dto.response.PigeonResponseDTO;
+import com.pigeonskyrace.dto.response.PigeonResultHistoryItemDto;
 import com.pigeonskyrace.dto.request.PigeonRequestDTO;
 import com.pigeonskyrace.mapper.PigeonMapper;
-import com.pigeonskyrace.model.Colombier;
 import com.pigeonskyrace.model.Pigeon;
-import com.pigeonskyrace.service.ColombierService;
+import com.pigeonskyrace.service.PigeonResultHistoryService;
 import com.pigeonskyrace.service.PigeonService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 public class PigeonController {
     private final PigeonService pigeonService;
     private final PigeonMapper pigeonMapper;
+    private final PigeonResultHistoryService pigeonResultHistoryService;
 
 
     @PostMapping("")
@@ -40,6 +41,11 @@ public class PigeonController {
                 .map(pigeonMapper::toPigeonResponseDTO)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(PigeonResponseDTOs);
+    }
+
+    @GetMapping("/{pigeonId}/result-history")
+    public ResponseEntity<List<PigeonResultHistoryItemDto>> resultHistory(@PathVariable String pigeonId) {
+        return ResponseEntity.ok(pigeonResultHistoryService.historyForPigeon(pigeonId));
     }
 
 }

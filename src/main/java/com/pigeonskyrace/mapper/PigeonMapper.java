@@ -22,6 +22,7 @@ public interface PigeonMapper {
     Pigeon toPigeon(PigeonRequestDTO pigeonRequestDTO);
 
     @Mapping(source = "colombier.id", target = "colombierId")
+    @Mapping(source = "imageUrl", target = "imageUrl")
     PigeonResponseDTO toPigeonResponseDTO(Pigeon pigeon);
 
     // Méthode pour générer le numéro de bague si absent

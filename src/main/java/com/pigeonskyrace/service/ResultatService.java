@@ -32,6 +32,7 @@ public class ResultatService {
     private final ResultatRepository resultatRepository;
     private final CompetionMapper competionMapper;
     private final ResultatMapper mapper;
+    private final ResultatResponseEnricher resultatResponseEnricher;
 
     /**
      * Crée un résultat pour un pigeon dans une compétition et calcule sa vitesse.
@@ -89,7 +90,7 @@ public class ResultatService {
         log.info("Résultat sauvegardé avec succès : {}", resultat);
 
         // Retourner le résultat mappé en DTO
-        ResultatResponseDTO ResultatResponseDTO = mapper.toResponseDTO(resultat);
+        ResultatResponseDTO ResultatResponseDTO = mapEnriched(resultat);
         log.info("Résultat retourné : {}", ResultatResponseDTO);
 
         return ResultatResponseDTO;
@@ -102,8 +103,11 @@ public class ResultatService {
         // Utilisation de la méthode modifiée dans ResultatRepository
         List<PigeonSaisonCompetition> pigeonSaisonCompetitions = pigeonSaisonCompetitionService.findByCompetition(competionMapper.toEntityy(competitionDto));
         List<Resultat> resultats = new ArrayList<>();
-        for(PigeonSaisonCompetition cp : pigeonSaisonCompetitions) {
-            resultats.add(resultatRepository.findByPigeonSaisonCompetition(cp));
+        for (PigeonSaisonCompetition cp : pigeonSaisonCompetitions) {
+            Resultat res = resultatRepository.findByPigeonSaisonCompetition(cp);
+            if (res != null) {
+                resultats.add(res);
+            }
         }
 
         if (resultats.isEmpty()) {
@@ -133,8 +137,14 @@ public class ResultatService {
         }
 
         return resultats.stream()
-                .map(mapper::toResponseDTO)
+                .map(this::mapEnriched)
                 .toList();
+    }
+
+    private ResultatResponseDTO mapEnriched(Resultat resultat) {
+        ResultatResponseDTO dto = mapper.toResponseDTO(resultat);
+        resultatResponseEnricher.enrich(resultat, dto);
+        return dto;
     }
 
     private double calculerVitesse(double distance, Duration tempsDeVol) {
@@ -164,8 +174,11 @@ public class ResultatService {
     public List<Resultat> getResultatsByCompetitionId(ObjectId competitionId) {
         List<PigeonSaisonCompetition> pigeonSaisonCompetitions = pigeonSaisonCompetitionService.findByCompetitionId(competitionId);
         List<Resultat> resultats = new ArrayList<>();
-        for(PigeonSaisonCompetition cp : pigeonSaisonCompetitions) {
-            resultats.add(resultatRepository.findByPigeonSaisonCompetition(cp));
+        for (PigeonSaisonCompetition cp : pigeonSaisonCompetitions) {
+            Resultat res = resultatRepository.findByPigeonSaisonCompetition(cp);
+            if (res != null) {
+                resultats.add(res);
+            }
         }
         return resultats;
     }

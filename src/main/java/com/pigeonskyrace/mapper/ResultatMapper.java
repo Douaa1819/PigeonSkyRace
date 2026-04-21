@@ -11,8 +11,12 @@ public interface ResultatMapper {
 
     @Mapping(source = "dateArrivee", target = "dateArrivee")
     Resultat toEntity(ResultatRequestDTO resultatRequestDTO);
-    @Mapping(target = "id", expression = "java(resultat.getId().toHexString())")
+
+    @Mapping(target = "id", expression = "java(resultat.getId() != null ? resultat.getId().toHexString() : null)")
+    @Mapping(source = "classement", target = "rank")
+    @Mapping(target = "pigeonId", ignore = true)
+    @Mapping(target = "ringNumber", ignore = true)
+    @Mapping(target = "loftName", ignore = true)
+    @Mapping(target = "imageUrl", ignore = true)
     ResultatResponseDTO toResponseDTO(Resultat resultat);
-
-
 }

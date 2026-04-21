@@ -57,12 +57,16 @@ public class ColombierController {
                 .map(colombier -> {
                     List<Pigeon> pigeons = pigeonService.findByColombierId(colombier.getId());
                     List<PigeonResponseDTO> pigeonDTOs = pigeons.stream()
-                            .map(pigeon -> new PigeonResponseDTO(
-                                    pigeon.getId().toHexString(),
-                                    pigeon.getNumeroBague(),
-                                    pigeon.getSexe(),
-                                    pigeon.getAge(),
-                                    pigeon.getCouleur()))
+                            .map(pigeon -> {
+                                PigeonResponseDTO d = new PigeonResponseDTO(
+                                        pigeon.getId().toHexString(),
+                                        pigeon.getNumeroBague(),
+                                        pigeon.getSexe(),
+                                        pigeon.getAge(),
+                                        pigeon.getCouleur());
+                                d.setImageUrl(pigeon.getImageUrl());
+                                return d;
+                            })
                             .collect(Collectors.toList());
 
                     ColombierResponseDTO dto = colombierMapper.toColombierResponseDTO(colombier);

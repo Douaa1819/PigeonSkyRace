@@ -42,6 +42,9 @@ public class Pigeon {
 
     private LocalDate dateNaissance;
 
+    /** Optional portrait URL for leaderboards and profiles. */
+    private String imageUrl;
+
     // Référence au colombier auquel ce pigeon appartient
     @DBRef
     private Colombier colombier;
