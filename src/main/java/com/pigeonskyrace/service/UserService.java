@@ -16,6 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Locale;
+
 @Service
 public class UserService {
 
@@ -37,18 +39,21 @@ public class UserService {
     }
 
     public AuthResponseDTO register(RegisterRequestDTO request) {
-        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+        String normalizedEmail = normalizeEmail(request.getEmail());
+        if (userRepository.findByEmail(normalizedEmail).isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email is already in use");
         }
         User user = userMapper.toEntity(request);
         user.setRole(Role.BREEDER);
+        user.setEmail(normalizedEmail);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         userRepository.save(user);
         return buildAuthResponse(user);
     }
 
     public AuthResponseDTO login(LoginRequestDTO request) {
-        User user = userRepository.findByEmail(request.getEmail())
+        String normalizedEmail = normalizeEmail(request.getEmail());
+        User user = userRepository.findByEmail(normalizedEmail)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials"));
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
@@ -69,5 +74,12 @@ public class UserService {
         String token = jwtTokenProvider.createAccessToken(user);
         UserResponseDTO userDto = userMapper.toResponse(user);
         return new AuthResponseDTO(token, userDto);
+    }
+
+    private String normalizeEmail(String email) {
+        if (email == null) {
+            return null;
+        }
+        return email.trim().toLowerCase(Locale.ROOT);
     }
 }

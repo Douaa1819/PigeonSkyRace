@@ -20,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 @Slf4j
@@ -46,8 +47,9 @@ public class DemoAccountsSeeder {
             User breeder1 = null;
             User breeder2 = null;
             for (SeedUser seed : seedUsers) {
-                User user = userRepository.findByEmail(seed.email()).orElseGet(User::new);
-                user.setEmail(seed.email());
+                String normalizedEmail = seed.email().trim().toLowerCase(Locale.ROOT);
+                User user = userRepository.findByEmail(normalizedEmail).orElseGet(User::new);
+                user.setEmail(normalizedEmail);
                 user.setName(seed.name());
                 user.setRole(seed.role());
                 if (user.getPassword() == null || user.getPassword().isBlank()
@@ -55,9 +57,9 @@ public class DemoAccountsSeeder {
                     user.setPassword(passwordEncoder.encode(seed.rawPassword()));
                 }
                 User saved = userRepository.save(user);
-                if ("breeder1@test.com".equals(saved.getEmail())) {
+                if ("breeder1@test.com".equalsIgnoreCase(saved.getEmail())) {
                     breeder1 = saved;
-                } else if ("breeder2@test.com".equals(saved.getEmail())) {
+                } else if ("breeder2@test.com".equalsIgnoreCase(saved.getEmail())) {
                     breeder2 = saved;
                 }
             }

@@ -28,7 +28,7 @@ export function Register() {
     setError(null);
     setLoading(true);
     try {
-      const currentUser = await register(name, email, password);
+      const currentUser = await register(name.trim(), email.trim(), password);
       navigate(routeForRole(currentUser.role), { replace: true });
     } catch (err) {
       if (isAxiosError<{ message?: string }>(err)) {
