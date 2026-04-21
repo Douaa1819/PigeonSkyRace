@@ -12,6 +12,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
 import java.util.List;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
@@ -32,6 +33,9 @@ public interface ColombierMapper {
 
     @Named("toPigeonResponseDTOList")
     default List<PigeonResponseDTO> toPigeonResponseDTOList(List<Pigeon> pigeons) {
+        if (pigeons == null) {
+            return Collections.emptyList();
+        }
         return pigeons.stream()
                 .map(this::toPigeonResponseDTO)
                 .collect(Collectors.toList());

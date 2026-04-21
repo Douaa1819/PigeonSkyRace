@@ -54,15 +54,21 @@ export function Layout() {
                   {t('nav.breeder')}
                 </NavLink>
               )}
-              <NavLink to="/competitions" onClick={closeMenu}>
-                {t('nav.competitions')}
-              </NavLink>
-              <NavLink to="/live" onClick={closeMenu}>
-                {t('nav.live')}
-              </NavLink>
-              <NavLink to="/pigeons" onClick={closeMenu}>
-                {t('nav.pigeons')}
-              </NavLink>
+              {(user.role === 'ADMIN' || user.role === 'ORGANIZER') && (
+                <NavLink to="/competitions" onClick={closeMenu}>
+                  {t('nav.competitions')}
+                </NavLink>
+              )}
+              {(user.role === 'ADMIN' || user.role === 'ORGANIZER') && (
+                <NavLink to="/live" onClick={closeMenu}>
+                  {t('nav.live')}
+                </NavLink>
+              )}
+              {user.role === 'BREEDER' && (
+                <NavLink to="/pigeons" onClick={closeMenu}>
+                  {t('nav.pigeons')}
+                </NavLink>
+              )}
               <NavLink to="/results" onClick={closeMenu}>
                 {t('nav.rankings')}
               </NavLink>

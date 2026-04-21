@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
+import java.util.ArrayList;
 import java.util.List;
 @Builder
 @Data
@@ -39,7 +40,7 @@ public class Colombier {
     private User user;
 
     @DBRef
-    private List<Pigeon> pigeons;
+    private List<Pigeon> pigeons = new ArrayList<>();
 
     public void setProprietaireId(ObjectId userId) {
         User user = new User();

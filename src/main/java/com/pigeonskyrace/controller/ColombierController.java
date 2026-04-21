@@ -56,7 +56,7 @@ public class ColombierController {
         List<ColombierResponseDTO> colombierResponseDTOs = colombiers.stream()
                 .map(colombier -> {
                     List<Pigeon> pigeons = pigeonService.findByColombierId(colombier.getId());
-                    List<PigeonResponseDTO> pigeonDTOs = pigeons.stream()
+                    List<PigeonResponseDTO> pigeonDTOs = (pigeons == null ? List.<Pigeon>of() : pigeons).stream()
                             .map(pigeon -> {
                                 PigeonResponseDTO d = new PigeonResponseDTO(
                                         pigeon.getId().toHexString(),

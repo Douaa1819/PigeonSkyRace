@@ -3,7 +3,7 @@ import { GlassCard } from '@/components/ui/GlassCard';
 import { SectionTitle } from '@/components/ui/SectionTitle';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { useApiGet } from '@/hooks/useApiGet';
-import { ShieldCheck, UsersRound, Bird, Trophy } from 'lucide-react';
+import { UsersRound, Bird, Trophy } from 'lucide-react';
 
 export function AdminDashboard() {
   const pigeons = useApiGet<PigeonDto[]>('/v1/pigeons');
@@ -54,17 +54,6 @@ export function AdminDashboard() {
           )}
         </GlassCard>
       </div>
-
-      <GlassCard style={{ padding: '1.25rem' }} hoverLift={false}>
-        <h3 style={{ marginTop: 0, display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
-          <ShieldCheck size={16} />
-          Security and monitoring
-        </h3>
-        <p className="muted" style={{ margin: 0 }}>
-          JWT-authenticated APIs, role-based routing, and hardened response headers are enabled. Use this dashboard
-          for administrative supervision.
-        </p>
-      </GlassCard>
     </div>
   );
 }
