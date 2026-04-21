@@ -37,10 +37,10 @@ public class DemoAccountsSeeder {
     CommandLineRunner seedDemoRoleAccounts() {
         return args -> {
             List<SeedUser> seedUsers = List.of(
-                    new SeedUser("admin@test.com", "123456", "System Admin", Role.ADMIN),
-                    new SeedUser("organizer@test.com", "123456", "Race Organizer", Role.ORGANIZER),
-                    new SeedUser("breeder1@test.com", "123456", "Breeder One", Role.BREEDER),
-                    new SeedUser("breeder2@test.com", "123456", "Breeder Two", Role.BREEDER)
+                    new SeedUser("admin@test.com", "12345678", "System Admin", Role.ADMIN),
+                    new SeedUser("organizer@test.com", "12345678", "Race Organizer", Role.ORGANIZER),
+                    new SeedUser("breeder1@test.com", "12345678", "Breeder One", Role.BREEDER),
+                    new SeedUser("breeder2@test.com", "12345678", "Breeder Two", Role.BREEDER)
             );
 
             User breeder1 = null;
