@@ -13,6 +13,7 @@ export function Layout() {
   const { theme, toggle } = useTheme();
   const { locale, setLocale, t } = useLocale();
   const location = useLocation();
+  const isHome = location.pathname === '/';
   const [menuOpen, setMenuOpen] = useState(false);
 
   function closeMenu() {
@@ -23,14 +24,14 @@ export function Layout() {
     <div className="app-root">
       <SkyBackground />
       <FloatingOrbs />
-      <header className="nav">
+      <header className={`nav ${isHome ? 'nav--spatial' : ''}`}>
         <Link to="/" className="nav-brand">
           <Bird size={17} />
           <span>PigeonSkyRace</span>
         </Link>
         <button
           type="button"
-          className="nav-mobile-toggle btn btn-ghost"
+          className={`nav-mobile-toggle ${isHome ? 'btn btn-ghost' : 'btn btn-ghost'}`}
           aria-label="Toggle navigation"
           onClick={() => setMenuOpen((x) => !x)}
         >

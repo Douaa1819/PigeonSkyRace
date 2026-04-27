@@ -104,6 +104,35 @@ button {
   z-index: 20;
 }
 
+.nav--spatial {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+.nav--spatial .nav-brand {
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #d1d5db !important;
+}
+
+.nav--spatial .nav-links a {
+  padding: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  background: transparent !important;
+}
+
+.nav--spatial .nav-links a:hover,
+.nav--spatial .nav-links a.active {
+  color: #f9fafb;
+}
+
 .nav-brand {
   display: inline-flex;
   align-items: center;
@@ -330,6 +359,7 @@ button {
   margin: 0.55rem 0 0;
   letter-spacing: -0.03em;
   line-height: 1.06;
+  font-weight: 300;
 }
 
 .home-hero-sub {
@@ -496,6 +526,7 @@ button {
   flex-direction: column;
   gap: 2.6rem;
   padding-bottom: 2rem;
+  background: #050505;
 }
 
 .home-parallax-layer {
@@ -503,8 +534,10 @@ button {
   inset: 0;
   pointer-events: none;
   z-index: -1;
-  background: radial-gradient(circle at 20% 10%, rgba(56, 189, 248, 0.14), transparent 30%),
-    radial-gradient(circle at 80% 20%, rgba(37, 99, 235, 0.18), transparent 32%);
+  background: radial-gradient(circle at 20% 10%, rgba(37, 99, 235, 0.2), transparent 30%),
+    radial-gradient(circle at 80% 20%, rgba(250, 204, 21, 0.09), transparent 32%),
+    radial-gradient(circle at 52% 70%, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: auto, auto, 3px 3px;
 }
 
 .home-premium-hero {
@@ -522,29 +555,26 @@ button {
 }
 
 .hero-copy {
-  border: 1px solid var(--glass-border);
-  border-radius: 18px;
-  padding: 1.2rem;
-  background: var(--glass-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: var(--card-lift);
+  padding: 0.6rem 0.2rem;
+  transform: translateZ(0);
+  text-shadow: 0 20px 40px rgba(0, 0, 0, 0.55);
 }
 
 .hero-scene {
+  position: relative;
   height: 420px;
   border-radius: 18px;
-  border: 1px solid var(--glass-border);
-  background: linear-gradient(160deg, rgba(29, 78, 216, 0.2), rgba(11, 18, 32, 0.3));
+  border: 1px solid rgba(31, 41, 55, 0.7);
+  background: radial-gradient(circle at 50% 35%, rgba(14, 165, 233, 0.08), rgba(5, 5, 5, 0.98));
   overflow: hidden;
-  box-shadow: var(--card-lift);
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.6);
 }
 
 .home-section {
   border: 1px solid var(--glass-border);
   border-radius: 18px;
   padding: 1.25rem;
-  background: var(--glass-bg);
+  background: rgba(17, 24, 39, 0.7);
   backdrop-filter: blur(12px);
 }
 
@@ -701,7 +731,7 @@ button {
   border: 1px solid var(--glass-border);
   padding: 1.8rem 1.25rem;
   text-align: center;
-  background: radial-gradient(circle at top, rgba(29, 78, 216, 0.25), rgba(11, 18, 32, 0.95));
+  background: radial-gradient(circle at top, rgba(29, 78, 216, 0.2), rgba(5, 5, 5, 0.96));
 }
 
 .home-final-cta h2 {
@@ -713,6 +743,111 @@ button {
   color: var(--muted);
   max-width: 62ch;
   margin: 0.7rem auto 1rem;
+}
+
+.home-obsidian {
+  min-height: calc(100vh - 3rem);
+  position: relative;
+  background: #020203;
+  overflow: hidden;
+}
+
+.obsidian-stars,
+.obsidian-nebula-shift {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.obsidian-stars {
+  background:
+    radial-gradient(circle at 14% 20%, rgba(255, 255, 255, 0.22) 1px, transparent 1px),
+    radial-gradient(circle at 63% 36%, rgba(255, 255, 255, 0.14) 1px, transparent 1px),
+    radial-gradient(circle at 81% 18%, rgba(45, 91, 255, 0.24) 1.2px, transparent 1.2px),
+    radial-gradient(circle at 31% 73%, rgba(255, 215, 0, 0.14) 1px, transparent 1px);
+  background-size: 190px 190px, 220px 220px, 260px 260px, 200px 200px;
+  opacity: 0.55;
+}
+
+.obsidian-nebula-shift {
+  background: radial-gradient(circle at 55% 42%, rgba(45, 91, 255, 0.18), transparent 42%),
+    radial-gradient(circle at 50% 62%, rgba(255, 215, 0, 0.09), transparent 45%);
+  filter: blur(36px);
+}
+
+.obsidian-hero {
+  position: relative;
+  min-height: calc(100vh - 6rem);
+  display: grid;
+  grid-template-columns: minmax(300px, 560px) 1fr;
+  align-items: center;
+  gap: 1rem;
+  z-index: 1;
+}
+
+@media (max-width: 980px) {
+  .obsidian-hero {
+    grid-template-columns: 1fr;
+    gap: 0.3rem;
+  }
+}
+
+.obsidian-copy {
+  padding-top: 3rem;
+  transform: translateZ(60px);
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.55));
+}
+
+.obsidian-kicker {
+  margin: 0;
+  letter-spacing: 0.34em;
+  font-size: 0.68rem;
+  color: #9ca3af;
+}
+
+.obsidian-title {
+  margin: 0.9rem 0 0;
+  font-size: clamp(2rem, 4.5vw, 4.2rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-weight: 300;
+  background: linear-gradient(95deg, #f9fafb 0%, rgba(203, 213, 225, 0.24) 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.obsidian-sub {
+  margin: 1rem 0 0;
+  max-width: 52ch;
+  color: #9ca3af;
+}
+
+.obsidian-actions {
+  margin-top: 1.25rem;
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.obsidian-link {
+  color: #f9fafb !important;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  padding: 0;
+}
+
+.obsidian-link:hover {
+  color: #2d5bff !important;
+}
+
+.hero-scene::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at center, transparent 46%, rgba(2, 2, 3, 0.62) 100%);
 }
 
 .home-preview__image {
