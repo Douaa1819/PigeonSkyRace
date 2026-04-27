@@ -9,4 +9,5 @@ import java.util.Optional;
 
 public interface SaisonRepository extends MongoRepository<Saison, ObjectId> {
     Optional<Saison> findTopById(ObjectId id);
+    Optional<Saison> findByNom(String nom);
 }
