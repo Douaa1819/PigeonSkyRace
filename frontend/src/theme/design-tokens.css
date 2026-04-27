@@ -3,14 +3,15 @@
   --sky-top: #0b1220;
   --sky-mid: #111827;
   --sky-bottom: #1f2937;
-  --gold: #38bdf8;
-  --gold-soft: rgba(56, 189, 248, 0.28);
+  --gold: #facc15;
+  --gold-soft: rgba(250, 204, 21, 0.35);
   --glass-bg: rgba(17, 24, 39, 0.82);
   --glass-border: rgba(31, 41, 55, 0.95);
   --glass-highlight: rgba(156, 163, 175, 0.14);
   --glow: 0 0 40px rgba(37, 99, 235, 0.18);
   --card-lift: 0 22px 48px rgba(11, 18, 32, 0.45);
-  --font-display: 'DM Sans', system-ui, sans-serif;
+  --font-display: Inter, 'Plus Jakarta Sans', system-ui, sans-serif;
+  --telemetry-font: 'JetBrains Mono', 'SF Mono', ui-monospace, Menlo, Consolas, monospace;
 }
 
 [data-theme='light'] {

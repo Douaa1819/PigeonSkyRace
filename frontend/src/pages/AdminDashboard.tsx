@@ -17,7 +17,7 @@ export function AdminDashboard() {
       <SectionTitle
         eyebrow="Admin Center"
         title="Federation system overview"
-        subtitle="Global monitoring for users, pigeons, competitions and operational health."
+        subtitle="Global command view for platform activity, role distribution, competition coverage, and federation operations."
       />
 
       {error && <div className="error-banner">{error}</div>}

@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.17.14",
     "@stomp/stompjs": "^7.3.0",
     "axios": "^1.7.9",
     "framer-motion": "^11.18.2",
@@ -17,7 +19,8 @@
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.28.0",
     "recharts": "^2.15.0",
-    "sockjs-client": "^1.6.1"
+    "sockjs-client": "^1.6.1",
+    "three": "^0.184.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",

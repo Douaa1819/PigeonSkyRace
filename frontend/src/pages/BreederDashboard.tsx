@@ -29,7 +29,7 @@ export function BreederDashboard() {
       <SectionTitle
         eyebrow={t('dashboard.breeder.title')}
         title={`Welcome, ${user?.name ?? 'Champion'}`}
-        subtitle="Your lofts and racing athletes — performance and entries in one premium workspace."
+        subtitle="Your lofts, registered pigeons, seasonal competitions, and official results in a single telemetry-style cockpit."
       />
 
       {error && <div className="error-banner">{error}</div>}

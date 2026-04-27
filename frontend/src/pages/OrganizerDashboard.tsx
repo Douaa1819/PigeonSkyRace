@@ -23,8 +23,8 @@ export function OrganizerDashboard() {
         title={t('dashboard.organizer.title')}
         subtitle={
           <>
-            Signed in as <strong>{user?.email}</strong> ({user?.role}). Manage seasons, races, and published
-            results from here.
+            Signed in as <strong>{user?.email}</strong> ({user?.role}). Configure speed, demi-fond and fond
+            competitions, add participants by ring number, upload arrivals, and close races for official rankings.
           </>
         }
       />
@@ -66,7 +66,8 @@ export function OrganizerDashboard() {
       <GlassCard style={{ padding: '1.25rem' }} hoverLift={false}>
         <h3 style={{ marginTop: 0 }}>Race operations</h3>
         <p className="muted" style={{ margin: '0 0 0.75rem' }}>
-          Create seasons and competitions through the REST API, then monitor standings as results are posted.
+          Annual federation workflow: define race GPS launch points, schedule race windows, add pigeons from each loft,
+          then publish ranked results with export support.
         </p>
         <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
           <Link className="btn btn-ghost" to="/competitions">

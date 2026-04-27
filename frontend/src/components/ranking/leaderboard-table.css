@@ -48,7 +48,7 @@
 }
 
 .leaderboard-table__row--spotlight td {
-  background: linear-gradient(90deg, rgba(56, 189, 248, 0.09), transparent 55%);
+  background: linear-gradient(90deg, rgba(250, 204, 21, 0.1), transparent 55%);
 }
 
 .leaderboard-table__row--move-up td {
@@ -95,10 +95,10 @@
 }
 
 .leaderboard-table__rank--gold {
-  background: linear-gradient(135deg, #38bdf8, #2563eb);
+  background: linear-gradient(135deg, #facc15, #eab308);
   color: #0b1220;
-  border-color: rgba(56, 189, 248, 0.55);
-  box-shadow: 0 0 22px rgba(37, 99, 235, 0.28);
+  border-color: rgba(250, 204, 21, 0.65);
+  box-shadow: 0 0 22px rgba(250, 204, 21, 0.34);
 }
 
 .leaderboard-table__rank--silver {
@@ -107,7 +107,7 @@
 }
 
 .leaderboard-table__rank--bronze {
-  background: linear-gradient(135deg, #cbd5e1, #64748b);
+  background: linear-gradient(135deg, #cd7f32, #b45309);
   color: #0f172a;
 }
 
