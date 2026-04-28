@@ -14,14 +14,16 @@ const LocaleContext = createContext<LocaleContextValue | null>(null);
 
 export function LocaleProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleRaw] = useState<Locale>(() => {
+    if (typeof window === 'undefined') return 'fr';
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved === 'en' || saved === 'ar' || saved === 'fr') return saved;
     return 'fr';
   });
 
   const setLocale = (next: Locale) => {
-    setLocaleRaw(next);
-    localStorage.setItem(STORAGE_KEY, next);
+    const normalized: Locale = next === 'ar' || next === 'en' || next === 'fr' ? next : 'fr';
+    setLocaleRaw(normalized);
+    localStorage.setItem(STORAGE_KEY, normalized);
   };
 
   const toggleLocale = () => {

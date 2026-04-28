@@ -7,6 +7,11 @@ import type { Locale } from '@/i18n/translations';
  */
 export function LocaleSelect({ id, className = '' }: { id?: string; className?: string }) {
   const { locale, setLocale, t } = useLocale();
+  const OPTIONS: ReadonlyArray<{ value: Locale; label: string }> = [
+    { value: 'fr', label: 'Français' },
+    { value: 'en', label: 'English' },
+    { value: 'ar', label: 'العربية' },
+  ];
 
   return (
     <div className={`locale-select-ui ${className}`.trim()}>
@@ -14,12 +19,17 @@ export function LocaleSelect({ id, className = '' }: { id?: string; className?: 
         id={id}
         className="locale-select-ui__input"
         value={locale}
-        onChange={(e) => setLocale(e.target.value as Locale)}
+        onChange={(e) => {
+          const next = e.target.value as Locale;
+          setLocale(next);
+        }}
         aria-label={t('footer.spatial.langLabel')}
       >
-        <option value="fr">{t('lang.fr')}</option>
-        <option value="en">{t('lang.en')}</option>
-        <option value="ar">{t('lang.ar')}</option>
+        {OPTIONS.map((opt) => (
+          <option key={opt.value} value={opt.value}>
+            {opt.label}
+          </option>
+        ))}
       </select>
       <ChevronDown className="locale-select-ui__chev" size={14} strokeWidth={1.75} aria-hidden />
     </div>

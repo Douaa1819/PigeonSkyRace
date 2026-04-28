@@ -1,4 +1,3 @@
-import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { Bird } from 'lucide-react';
@@ -128,18 +127,9 @@ export function Layout() {
         )}
       </header>
       <main className="app-main">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={location.pathname}
-            className={`page ${isHome ? 'page--obsidian' : ''}`}
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <Outlet />
-          </motion.div>
-        </AnimatePresence>
+        <div key={location.pathname} className={`page ${isHome ? 'page--obsidian' : ''}`}>
+          <Outlet />
+        </div>
       </main>
       {!isHome && <LayoutPreferencesFooter />}
     </div>

@@ -25,10 +25,25 @@ body,
   min-height: 100%;
 }
 
+/* First paint fallback to avoid blank flashes during provider hydration */
+.app-boot-placeholder {
+  min-height: 100vh;
+  width: 100%;
+  background: #000000;
+}
+
 html {
   overflow-x: hidden;
   background-color: var(--bg);
   transition: background-color 0.55s ease, color 0.55s ease;
+}
+
+html.rtl body {
+  direction: rtl;
+}
+
+html.ltr body {
+  direction: ltr;
 }
 
 body {
@@ -1702,12 +1717,12 @@ html.light [data-theme='light'] .home-obsidian {
 }
 
 html.light [data-theme='light'] .obsidian-hero {
-  padding: 5.5rem 1.25rem 2.5rem;
+  padding: 5rem 1.1rem 2.2rem;
   min-height: calc(90vh - 3rem);
 }
 
 html.light [data-theme='light'] .spatial-section {
-  padding: 5.5rem 0;
+  padding: 4.9rem 0;
 }
 
 html.light [data-theme='light'] .marketing-strip {

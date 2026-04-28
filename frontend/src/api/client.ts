@@ -8,10 +8,12 @@ export const api = axios.create({
 });
 
 export function getStoredToken(): string | null {
+  if (typeof window === 'undefined') return null;
   return localStorage.getItem(TOKEN_KEY);
 }
 
 export function setStoredToken(token: string | null) {
+  if (typeof window === 'undefined') return;
   if (token) {
     localStorage.setItem(TOKEN_KEY, token);
   } else {
@@ -28,6 +30,7 @@ api.interceptors.request.use((config) => {
 });
 
 function clearSessionAndRedirectLogin() {
+  if (typeof window === 'undefined') return;
   setStoredToken(null);
   localStorage.removeItem('psr_user');
   const path = window.location.pathname;

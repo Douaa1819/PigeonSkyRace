@@ -20,6 +20,7 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 const USER_KEY = 'psr_user';
 
 function readUser(): UserDto | null {
+  if (typeof window === 'undefined') return null;
   try {
     const raw = localStorage.getItem(USER_KEY);
     if (!raw) return null;

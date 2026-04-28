@@ -20,6 +20,7 @@ const STORAGE_KEY = 'psr_theme';
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === 'undefined') return 'dark';
     const s = localStorage.getItem(STORAGE_KEY) as Theme | null;
     if (s === 'light' || s === 'dark') return s;
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';

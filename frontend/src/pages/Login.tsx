@@ -41,6 +41,9 @@ export function Login() {
 
   return (
     <motion.div className="auth-page" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
+      {/* Test credentials (local seeded backend):
+          Admin: admin@pigeonskyrace.ma / admin123
+          Breeder: breeder@test.ma / breeder123 */}
       <div className="auth-shell auth-shell--lux bg-white text-black dark:bg-black dark:text-white">
         <h2 className="dark:text-white">{t('auth.login.title')}</h2>
         <p className="text-zinc-600 dark:text-zinc-300" style={{ marginTop: 0 }}>

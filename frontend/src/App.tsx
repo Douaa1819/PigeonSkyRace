@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { Layout } from '@/components/Layout';
 import { useAuth } from '@/context/AuthContext';
 import { AdminDashboard } from '@/pages/AdminDashboard';
@@ -50,6 +51,16 @@ function RequireBreeder({ children }: { children: ReactNode }) {
 }
 
 export function App() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return <div className="app-boot-placeholder" aria-hidden />;
+  }
+
   return (
     <Routes>
       <Route element={<Layout />}>
