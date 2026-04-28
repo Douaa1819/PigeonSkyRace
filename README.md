@@ -130,3 +130,27 @@ mvn clean install
 mvn spring-boot:run
 ```
 
+## Quick Local Login (Seeded Accounts)
+
+The backend auto-seeds demo users at startup via `DemoAccountsSeeder`, so you can immediately test:
+
+- Admin
+  - Email: `admin@pigeonskyrace.ma`
+  - Password: `admin123`
+- Organizer
+  - Email: `organizer@pigeonskyrace.ma`
+  - Password: `organizer123`
+- Breeder
+  - Email: `breeder@test.ma`
+  - Password: `breeder123`
+
+Use these for full flow checks:
+
+1. Register (optional, new breeder account)
+2. Login with seeded account
+3. Verify role-based dashboard routing
+
+## Environment Variables
+
+Create a local `.env` from `.env.example` (or export directly in your shell) before running Docker + backend.
+

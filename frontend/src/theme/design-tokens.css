@@ -1,28 +1,46 @@
-/* Strict federation palette (requested system) */
+/* Obsidian (dark) + Ivory (light) — no blue tints in ambient layers */
 :root {
-  --sky-top: #0b1220;
-  --sky-mid: #111827;
-  --sky-bottom: #1f2937;
+  --bg: #000000;
+  --text: #ffffff;
+  --text-muted: #a1a1aa;
+  /* Floating lists / legal footer (never pure white full opacity) */
+  --text-footer: rgba(255, 255, 255, 0.4);
+  --line: rgba(255, 255, 255, 0.2);
   --gold: #facc15;
   --gold-soft: rgba(250, 204, 21, 0.35);
-  --glass-bg: rgba(17, 24, 39, 0.82);
-  --glass-border: rgba(31, 41, 55, 0.95);
-  --glass-highlight: rgba(156, 163, 175, 0.14);
-  --glow: 0 0 40px rgba(37, 99, 235, 0.18);
-  --card-lift: 0 22px 48px rgba(11, 18, 32, 0.45);
+  /* Ambient: neutral, not navy */
+  --sky-top: #000000;
+  --sky-mid: #0a0a0a;
+  --sky-bottom: #000000;
+  --glass-bg: rgba(0, 0, 0, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-highlight: rgba(255, 255, 255, 0.08);
+  --glow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+  --card-lift: 0 0 0 1px rgba(255, 255, 255, 0.06);
   --font-display: Inter, 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-display-ivory: 'Cormorant Garamond', 'Times New Roman', Georgia, serif;
   --telemetry-font: 'JetBrains Mono', 'SF Mono', ui-monospace, Menlo, Consolas, monospace;
 }
 
 [data-theme='light'] {
-  --sky-top: #f8fafc;
-  --sky-mid: #eef2ff;
-  --sky-bottom: #e2e8f0;
-  --glass-bg: rgba(255, 255, 255, 0.88);
-  --glass-border: rgba(209, 213, 219, 0.8);
-  --glass-highlight: rgba(255, 255, 255, 0.95);
-  --glow: 0 0 50px rgba(37, 99, 235, 0.18);
-  --card-lift: 0 24px 48px rgba(15, 23, 42, 0.1);
+  --bg: #ffffff;
+  /* Titles: near-black; body copy: soft graphite (premium read) */
+  --text: #0a0a0a;
+  --text-muted: #525252;
+  --text-body-ivory: #1a1a1a;
+  --text-footer: rgba(0, 0, 0, 0.4);
+  /* Luxury contrast on white — "Tobacco" gold (not screen yellow) */
+  --gold: #b8860b;
+  --gold-soft: rgba(184, 134, 11, 0.32);
+  --line: rgba(0, 0, 0, 0.05);
+  --sky-top: #ffffff;
+  --sky-mid: #fafafa;
+  --sky-bottom: #f5f5f5;
+  --glass-bg: rgba(255, 255, 255, 0.92);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-highlight: rgba(0, 0, 0, 0.04);
+  --glow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+  --card-lift: 0 0 0 1px rgba(0, 0, 0, 0.06);
 }
 
 @media (prefers-reduced-motion: reduce) {

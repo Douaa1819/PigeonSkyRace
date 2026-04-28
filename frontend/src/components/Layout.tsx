@@ -1,20 +1,20 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
-import { Bird, Globe2, MoonStar, SunMedium } from 'lucide-react';
+import { Bird } from 'lucide-react';
 import { FloatingOrbs } from '@/components/ambient/FloatingOrbs';
+import { LayoutPreferencesFooter } from '@/components/LayoutPreferencesFooter';
 import { SkyBackground } from '@/components/ambient/SkyBackground';
 import { useAuth } from '@/context/AuthContext';
 import { useLocale } from '@/context/LocaleContext';
-import { useTheme } from '@/context/ThemeContext';
 
 export function Layout() {
   const { user, logout } = useAuth();
-  const { theme, toggle } = useTheme();
-  const { locale, setLocale, t } = useLocale();
+  const { t } = useLocale();
   const location = useLocation();
   const isHome = location.pathname === '/';
   const [menuOpen, setMenuOpen] = useState(false);
+  const showBurger = !isHome || Boolean(user);
 
   function closeMenu() {
     setMenuOpen(false);
@@ -22,104 +22,116 @@ export function Layout() {
 
   return (
     <div className="app-root">
-      <SkyBackground />
-      <FloatingOrbs />
-      <header className={`nav ${isHome ? 'nav--spatial' : ''}`}>
+      {!isHome && <SkyBackground />}
+      {!isHome && <FloatingOrbs />}
+      <header
+        className={`nav ${isHome ? 'nav--spatial nav--obsidian' : ''} ${
+          isHome ? 'nav--home-cinematic' : ''
+        } ${isHome && !user ? 'nav--home-guest' : ''}`}
+      >
         <Link to="/" className="nav-brand">
           <Bird size={17} />
           <span>PigeonSkyRace</span>
         </Link>
-        <button
-          type="button"
-          className={`nav-mobile-toggle ${isHome ? 'btn btn-ghost' : 'btn btn-ghost'}`}
-          aria-label="Toggle navigation"
-          onClick={() => setMenuOpen((x) => !x)}
-        >
-          {menuOpen ? t('nav.close') : t('nav.menu')}
-        </button>
-        <nav className={`nav-links ${menuOpen ? 'nav-links--open' : ''}`}>
-          {user && (
-            <>
-              {user.role === 'ADMIN' && (
-                <NavLink to="/admin" onClick={closeMenu}>
-                  {t('nav.admin')}
-                </NavLink>
-              )}
-              {(user.role === 'ADMIN' || user.role === 'ORGANIZER') && (
-                <NavLink to="/organizer" onClick={closeMenu}>
-                  {t('nav.organizer')}
-                </NavLink>
-              )}
-              {user.role === 'BREEDER' && (
-                <NavLink to="/breeder" onClick={closeMenu}>
-                  {t('nav.breeder')}
-                </NavLink>
-              )}
-              {(user.role === 'ADMIN' || user.role === 'ORGANIZER') && (
-                <NavLink to="/competitions" onClick={closeMenu}>
-                  {t('nav.competitions')}
-                </NavLink>
-              )}
-              {(user.role === 'ADMIN' || user.role === 'ORGANIZER') && (
-                <NavLink to="/live" onClick={closeMenu}>
-                  {t('nav.live')}
-                </NavLink>
-              )}
-              {user.role === 'BREEDER' && (
-                <NavLink to="/pigeons" onClick={closeMenu}>
-                  {t('nav.pigeons')}
-                </NavLink>
-              )}
-              <NavLink to="/results" onClick={closeMenu}>
-                {t('nav.rankings')}
-              </NavLink>
-            </>
-          )}
-          <label className="nav-lang">
-            <Globe2 size={15} />
-            <select
-              className="input nav-lang__select"
-              value={locale}
-              onChange={(e) => setLocale(e.target.value as 'fr' | 'en' | 'ar')}
-              aria-label="Language"
-            >
-              <option value="fr">{t('lang.fr')}</option>
-              <option value="en">{t('lang.en')}</option>
-              <option value="ar">{t('lang.ar')}</option>
-            </select>
-          </label>
-          <button type="button" className="btn btn-ghost" onClick={toggle} aria-label="Toggle theme">
-            {theme === 'dark' ? <SunMedium size={15} /> : <MoonStar size={15} />}
-            {theme === 'dark' ? t('theme.light') : t('theme.dark')}
+
+        {showBurger && (
+          <button
+            type="button"
+            className="nav-burger"
+            aria-label={menuOpen ? t('nav.close') : t('nav.menu')}
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((x) => !x)}
+          >
+            <span className="nav-burger__line" />
+            <span className="nav-burger__line" />
+            <span className="nav-burger__line" />
           </button>
-          {user ? (
-            <button
-              type="button"
-              className="btn btn-ghost"
-              onClick={() => {
-                closeMenu();
-                logout();
-              }}
-            >
-              {t('nav.signOut')}
-            </button>
-          ) : (
-            <>
-              <NavLink to="/login" onClick={closeMenu}>
-                {t('nav.login')}
-              </NavLink>
-              <NavLink to="/register" onClick={closeMenu}>
-                {t('nav.register')}
-              </NavLink>
-            </>
-          )}
-        </nav>
+        )}
+
+        {isHome && !user ? (
+          <div className="nav--home__auth" role="group" aria-label="Account access">
+            <NavLink to="/login" onClick={closeMenu} className="nav--home__link" end>
+              {t('nav.login')}
+            </NavLink>
+            <span className="nav--home__dot" aria-hidden>
+              ·
+            </span>
+            <NavLink to="/register" onClick={closeMenu} className="nav--home__link" end>
+              {t('nav.register')}
+            </NavLink>
+          </div>
+        ) : null}
+
+        {(!isHome || (isHome && user)) && (
+          <nav className={`nav-links ${menuOpen ? 'nav-links--open' : ''}`} aria-label="Main">
+            {user && (
+              <>
+                {user.role === 'ADMIN' && (
+                  <NavLink to="/admin" onClick={closeMenu}>
+                    {t('nav.admin')}
+                  </NavLink>
+                )}
+                {(user.role === 'ADMIN' || user.role === 'ORGANIZER') && (
+                  <NavLink to="/organizer" onClick={closeMenu}>
+                    {t('nav.organizer')}
+                  </NavLink>
+                )}
+                {user.role === 'BREEDER' && (
+                  <NavLink to="/breeder" onClick={closeMenu}>
+                    {t('nav.breeder')}
+                  </NavLink>
+                )}
+                {(user.role === 'ADMIN' || user.role === 'ORGANIZER') && (
+                  <NavLink to="/competitions" onClick={closeMenu}>
+                    {t('nav.competitions')}
+                  </NavLink>
+                )}
+                {(user.role === 'ADMIN' || user.role === 'ORGANIZER') && (
+                  <NavLink to="/live" onClick={closeMenu}>
+                    {t('nav.live')}
+                  </NavLink>
+                )}
+                {user.role === 'BREEDER' && (
+                  <NavLink to="/pigeons" onClick={closeMenu}>
+                    {t('nav.pigeons')}
+                  </NavLink>
+                )}
+                <NavLink to="/results" onClick={closeMenu}>
+                  {t('nav.rankings')}
+                </NavLink>
+              </>
+            )}
+            {user ? (
+              <button
+                type="button"
+                className="btn btn-ghost"
+                onClick={() => {
+                  closeMenu();
+                  logout();
+                }}
+              >
+                {t('nav.signOut')}
+              </button>
+            ) : (
+              !isHome && (
+                <>
+                  <NavLink to="/login" onClick={closeMenu}>
+                    {t('nav.login')}
+                  </NavLink>
+                  <NavLink to="/register" onClick={closeMenu}>
+                    {t('nav.register')}
+                  </NavLink>
+                </>
+              )
+            )}
+          </nav>
+        )}
       </header>
       <main className="app-main">
         <AnimatePresence mode="wait">
           <motion.div
             key={location.pathname}
-            className="page"
+            className={`page ${isHome ? 'page--obsidian' : ''}`}
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
@@ -129,6 +141,7 @@ export function Layout() {
           </motion.div>
         </AnimatePresence>
       </main>
+      {!isHome && <LayoutPreferencesFooter />}
     </div>
   );
 }

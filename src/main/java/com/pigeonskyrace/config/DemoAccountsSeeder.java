@@ -51,10 +51,10 @@ public class DemoAccountsSeeder {
     CommandLineRunner seedDemoRoleAccounts() {
         return args -> {
             List<SeedUser> seedUsers = List.of(
-                    new SeedUser("admin@test.com", "12345678", "System Admin", Role.ADMIN),
-                    new SeedUser("organizer@test.com", "12345678", "Race Organizer", Role.ORGANIZER),
-                    new SeedUser("breeder1@test.com", "12345678", "Breeder One", Role.BREEDER),
-                    new SeedUser("breeder2@test.com", "12345678", "Breeder Two", Role.BREEDER)
+                    new SeedUser("admin@pigeonskyrace.ma", "admin123", "System Admin", Role.ADMIN),
+                    new SeedUser("organizer@pigeonskyrace.ma", "organizer123", "Race Organizer", Role.ORGANIZER),
+                    new SeedUser("breeder@test.ma", "breeder123", "Breeder One", Role.BREEDER),
+                    new SeedUser("breeder2@test.ma", "breeder2123", "Breeder Two", Role.BREEDER)
             );
 
             User breeder1 = null;
@@ -70,9 +70,9 @@ public class DemoAccountsSeeder {
                     user.setPassword(passwordEncoder.encode(seed.rawPassword()));
                 }
                 User saved = userRepository.save(user);
-                if ("breeder1@test.com".equalsIgnoreCase(saved.getEmail())) {
+                if ("breeder@test.ma".equalsIgnoreCase(saved.getEmail())) {
                     breeder1 = saved;
-                } else if ("breeder2@test.com".equalsIgnoreCase(saved.getEmail())) {
+                } else if ("breeder2@test.ma".equalsIgnoreCase(saved.getEmail())) {
                     breeder2 = saved;
                 }
             }

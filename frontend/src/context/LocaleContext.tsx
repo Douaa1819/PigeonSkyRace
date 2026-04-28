@@ -37,8 +37,12 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
-    document.documentElement.lang = locale;
-    document.documentElement.dir = locale === 'ar' ? 'rtl' : 'ltr';
+    const root = document.documentElement;
+    const isRtl = locale === 'ar';
+    root.lang = locale;
+    root.dir = isRtl ? 'rtl' : 'ltr';
+    root.classList.toggle('rtl', isRtl);
+    root.classList.toggle('ltr', !isRtl);
   }, [locale]);
 
   const value = useMemo(
